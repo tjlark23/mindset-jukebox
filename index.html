@@ -348,7 +348,7 @@ var S=[
   {id:"zero-to-one",t:"Zero to One",p:"Peter Thiel",s:"peter-thiel",g:"Folk Pop",tp:["Books","Entrepreneurship"],d:"5:01",sec:301,f:"TJs Playlist/Zero to One (Peter Thiel).mp3",tl:"Create, don't compete.",ds:"Going from zero to one means creating something new. Going from one to n means copying. Only zero to one changes the world."},
   {id:"wrong-game",t:"Wrong Game",p:"Shaan Puri",s:"shaan-puri",g:"Folk Pop",tp:["Entrepreneurship","Mindset"],d:"4:46",sec:286,f:"Showcase/Wrong Game (Shaan Puri).mp3",tl:"Win by choosing the right game.",ds:"Most people are playing a game they never chose. Shaan's insight: pick the right game first, then worry about winning it."},
   {id:"yet",t:"Yet",p:"Carol Dweck",s:"carol-dweck",g:"Folk Pop",tp:["Mindset","Books"],d:"4:09",sec:249,f:"Showcase/Yet (Carol Dweck).mp3",tl:"The most powerful word in the language.",ds:"One word separates a fixed mindset from a growth mindset. You haven't figured it out... yet."},
-  {id:"friend-of-the-incumbent",t:"Friend of the Incumbent",p:"Bill Gurley",s:"bill-gurley",g:"Folk Pop",tp:["Entrepreneurship","Contrarian"],d:"4:03",sec:243,f:"TJs Playlist/Friend of the Incumbent (Bill Gurley) (1).mp3",tl:"Regulation is a moat for the powerful.",ds:"Regulation doesn't protect consumers. It protects the companies already in power. Gurley exposed the game that incumbents play."},
+  {id:"friend-of-the-incumbent",t:"Friend of the Incumbent",p:"Bill Gurley",s:"bill-gurley",g:"Country Trap",tp:["Entrepreneurship","Contrarian"],d:"4:03",sec:243,f:"TJs Playlist/Friend of the Incumbent (Bill Gurley) (1).mp3",tl:"Regulation is a moat for the powerful.",ds:"Regulation doesn't protect consumers. It protects the companies already in power. Gurley exposed the game that incumbents play."},
   {id:"inaction-is-a-choice",t:"Inaction is a Choice",p:"Seth Godin",s:"seth-godin",g:"Folk Pop",tp:["Mindset","Creativity"],d:"3:48",sec:228,f:"TJs Playlist/Inaction is a Choice (Seth Godin).mp3",tl:"Doing nothing is doing something.",ds:"Not deciding is a decision. Not shipping is shipping nothing. Godin's message: the risk of inaction always exceeds the risk of action."},
   {id:"the-dip",t:"The Dip",p:"Seth Godin",s:"seth-godin",g:"Folk Pop",tp:["Books","Mindset"],d:"4:17",sec:257,f:"TJs Playlist/The Dip (Seth Godin).mp3",tl:"Quit the wrong stuff. Stick with the right stuff.",ds:"Every worthwhile pursuit has a dip — a long slog between starting and mastery. Winners know which dips to push through and which to quit."},
   {id:"listen-first",t:"Listen First",p:"Dale Carnegie",s:"dale-carnegie",g:"Folk Pop",tp:["Books","Networking"],d:"6:42",sec:402,f:"TJs Playlist/Listen First (Dale Carnegie).mp3",tl:"You can't learn with your mouth open.",ds:"The fastest way to influence anyone: shut up and listen. Carnegie figured this out a century ago and it still works."},
@@ -574,9 +574,9 @@ function renderHome(el){
   h+='<div class="hero-actions"><button class="btn btn-teal" onclick="playSong(Math.floor(Math.random()*S.length))">'+playTri+' Shuffle Play</button></div>';
   
   h+='</section>';
-  var feat=S[0];
+  var feat=S.find(function(x){return x.s==='naval-ravikant'})||S[0];
   h+='<section style="margin-bottom:36px"><div class="sh">Start Here</div>';
-  h+='<div class="feat" data-si="0" onclick="playSong(0)">';
+  h+='<div class="feat" onclick="playSong(S.indexOf(feat))">';
   h+=avatarHTML(feat.s,72);
   h+='<div><div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:4px">'+feat.p+'</div>';
   h+='<div style="font-family:\'Playfair Display\',serif;font-size:20px;font-weight:700;margin-bottom:4px">'+feat.t+'</div>';
