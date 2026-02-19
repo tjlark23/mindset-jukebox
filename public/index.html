@@ -323,6 +323,7 @@ a{text-decoration:none;color:inherit}
     <div class="rp-footer"><span id="rpCount"></span><a href="#">mindsetjukebox.com</a></div>
   </div>
 </div>
+<footer class="site-footer" id="siteFooter"></footer>
 <audio id="audio" preload="none"></audio>
 <script>
 // ══════════════════════════════════════════════════
@@ -695,29 +696,42 @@ function renderProfile(slug,el){
   var person=P.find(function(p){return p.s===slug});
   if(!person){renderHome(el);return}
   var songs=S.filter(function(s){return s.s===slug});
-  document.title='Mindset Jukebox — '+person.n;
+  document.title='Mindset Jukebox \u2014 '+person.n;
 
-  var h='<div class="prof-hero">';
-  h+=avatarHTML(slug,80);
+  // Cinematic dark banner
+  var photoStyle=PHOTOS[slug]?'background-image:url('+PHOTOS[slug]+')':'';
+  var iniHTML='';
+  if(!PHOTOS[slug]){var c=COLORS[(slug||'x').charCodeAt(0)%COLORS.length];photoStyle='background:'+c;iniHTML='<span class="avatar-initials">'+initials(person.n)+'</span>'}
+
+  var h='<div class="prof-banner"><div class="prof-banner-inner">';
+  h+='<div class="prof-avatar-lg" style="'+photoStyle+'">'+iniHTML+'</div>';
   h+='<div class="prof-info"><div class="prof-eyebrow">Featured Profile</div>';
   h+='<h1 class="prof-name">'+person.n.toUpperCase()+'</h1>';
   h+='<p class="prof-desc">'+(person.bio||person.r)+'</p>';
   h+='<div class="prof-links">';
-  if(person.tw)h+='<a href="https://x.com/'+person.tw+'" target="_blank" class="prof-link">@'+person.tw+'</a>';
-  h+='<span class="prof-link" onclick="go(\'\')">&#8592; All People</span>';
+  if(person.tw)h+='<a href="https://x.com/'+person.tw+'" target="_blank" class="prof-link">@'+person.tw.toUpperCase()+'</a>';
+  h+='<span class="prof-link" onclick="go(\'\')">&larr; ALL PEOPLE</span>';
   h+='</div></div></div>';
+  if(person.pq){h+='<div class="prof-quote"><q>\u201C'+person.pq+'\u201D</q></div>'}
+  h+='</div>';
 
-  // Pull quote
-  if(person.pq){
-    h+='<div class="pull-quote"><q>'+person.pq+'</q><cite>'+person.n+'</cite></div>';
-  }
+  // Stats bar
+  var totalSec=songs.reduce(function(a,s){return a+s.sec},0);
+  var genres={};songs.forEach(function(s){genres[s.g]=1});
+  h+='<div class="prof-stats">';
+  h+='<div class="prof-stat"><span class="prof-stat-val">'+songs.length+'</span><span class="prof-stat-label">Track'+(songs.length>1?'s':'')+'</span></div>';
+  h+='<div class="prof-stat"><span class="prof-stat-val">'+fmt(totalSec)+'</span><span class="prof-stat-label">Total</span></div>';
+  h+='<div class="prof-stat-tags">'+Object.keys(genres).map(function(g){return'<span class="tag tag-genre">'+g+'</span>'}).join('')+'</div>';
+  h+='</div>';
 
-  // Songs
-  h+='<div class="sh"><span class="sh-label">'+songs.length+' Track'+(songs.length>1?'s':'')+'</span><div class="sh-line"></div></div>';
+  // Songs with waveform bars
+  h+='<div class="sh"><span class="sh-label">The Tracks</span><div class="sh-line"></div></div>';
   h+='<div style="margin-bottom:32px">';
   songs.forEach(function(s){
     var gi=S.indexOf(s);
+    var wb='';for(var w=0;w<8;w++)wb+='<i style="height:'+Math.floor(Math.random()*5+2)+'px"></i>';
     h+='<div class="scard" data-si="'+gi+'" onclick="playSong('+gi+')">';
+    h+='<div class="sc-wave">'+wb+'</div>';
     h+='<div class="sc-row"><button class="play-btn" style="width:40px;height:40px">'+playTri+'</button><span class="sc-title">'+s.t+'</span><span class="sc-dur">'+s.d+'</span></div>';
     h+='<div class="sc-tagline">'+s.tl+'</div>';
     h+='<div class="sc-desc">'+s.ds+'</div>';
@@ -726,16 +740,16 @@ function renderProfile(slug,el){
   });
   h+='</div>';
 
-  // Liner notes - real content
+  // Liner notes
   h+='<div class="sh"><span class="sh-label">Liner Notes</span><div class="sh-line"></div></div>';
   var ln1=person.ln1||('What makes '+person.n+' worth listening to? These tracks capture the core ideas that set them apart.');
   var ln2=person.ln2||('Each song distills a concept into something you can feel. Hit play and absorb what took them years to figure out.');
-  h+='<div class="liner-grid"><div class="liner-card"><h3>Why '+person.n.split(' ')[0]+'?</h3><p>'+ln1+'</p></div>';
+  h+='<div class="liner-grid" style="margin-bottom:48px"><div class="liner-card"><h3>Why '+person.n.split(' ')[0]+'?</h3><p>'+ln1+'</p></div>';
   h+='<div class="liner-card"><h3>About '+(songs.length>1?'These Tracks':'This Track')+'</h3><p>'+ln2+'</p></div></div>';
 
-  h+=tjFooter();
   el.innerHTML=h;
 }
+
 
 // ══════════════════════════════════════════════════
 // TJ FOOTER
