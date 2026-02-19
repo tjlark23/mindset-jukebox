@@ -129,20 +129,39 @@ a{text-decoration:none;color:inherit}
 .sr-genre{font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:0.5px;text-transform:uppercase;color:var(--tg-genre);background:var(--tg-genre-bg);padding:2px 6px;border-radius:2px;flex-shrink:0;border-left:1.5px solid var(--tg-genre-edge)}
 .sr-dur{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint);flex-shrink:0}
 
-/* PROFILE PAGE */
-.prof-hero{display:flex;gap:24px;align-items:center;margin-bottom:24px}
+/* PROFILE PAGE - CINEMATIC HERO */
+.prof-banner{background:#1A1D24;margin:-40px -40px 0;padding:48px 40px 40px;position:relative;overflow:hidden}
+.prof-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(226,97,58,0.08) 0%,transparent 60%)}
+.prof-banner-inner{display:flex;gap:28px;align-items:flex-start;position:relative;z-index:2}
+.prof-avatar-lg{width:120px;height:120px;border-radius:50%;background:var(--surface);background-size:cover;background-position:center;flex-shrink:0;border:3px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.prof-avatar-lg .avatar-initials{font-family:'Bebas Neue',sans-serif;color:white;font-size:44px}
 .prof-info{flex:1}
-.prof-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--coral);margin-bottom:3px}
-.prof-name{font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;letter-spacing:1px;color:var(--ink);margin-bottom:6px}
-.prof-desc{font-size:14px;font-weight:300;color:var(--ink-dim);line-height:1.65;margin-bottom:10px}
+.prof-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+.prof-name{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;letter-spacing:2px;color:white;margin-bottom:10px}
+.prof-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:12px;max-width:480px}
 .prof-links{display:flex;gap:6px;flex-wrap:wrap}
-.prof-link{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ink-dim);padding:4px 10px;border:1px solid var(--border-h);border-radius:3px;background:white;transition:all .2s}
+.prof-link{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);padding:4px 10px;border:1px solid rgba(255,255,255,0.12);border-radius:3px;transition:all .2s;cursor:pointer}
 .prof-link:hover{border-color:var(--coral);color:var(--coral)}
 
-/* PULL QUOTE */
-.pull-quote{margin:0 0 32px;padding:28px 32px;border-left:3px solid var(--coral);background:var(--coral-bg)}
-.pull-quote q{font-family:'DM Serif Display',serif;font-style:italic;font-size:22px;line-height:1.4;color:var(--ink);display:block;quotes:none}
-.pull-quote cite{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);display:block;margin-top:10px}
+/* PULL QUOTE - inside banner */
+.prof-quote{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06)}
+.prof-quote q{font-family:'DM Serif Display',serif;font-style:italic;font-size:24px;line-height:1.35;color:rgba(255,255,255,0.85);display:block;quotes:none}
+
+/* STATS BAR */
+.prof-stats{display:flex;gap:32px;align-items:center;padding:16px 40px;margin:0 -40px;background:var(--bg-warm);border-bottom:1px solid var(--border);margin-bottom:28px}
+.prof-stat{display:flex;align-items:baseline;gap:6px}
+.prof-stat-val{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--ink);line-height:1}
+.prof-stat-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-dim)}
+.prof-stat-tags{display:flex;gap:6px;margin-left:auto}
+
+/* WAVEFORM decoration on song cards */
+.sc-wave{position:absolute;left:4px;top:0;bottom:0;width:3px;display:flex;flex-direction:column;justify-content:center;gap:1px;opacity:0;transition:opacity .2s}
+.scard:hover .sc-wave,.scard.active .sc-wave{opacity:1}
+.sc-wave i{display:block;width:3px;border-radius:1px;background:var(--coral);opacity:0.4}
+.scard.active .sc-wave i{opacity:0.8;animation:wv 0.8s ease-in-out infinite alternate}
+.scard.active .sc-wave i:nth-child(2n){animation-delay:0.15s}
+.scard.active .sc-wave i:nth-child(3n){animation-delay:0.3s}
+@keyframes wv{from{height:2px}to{height:6px}}
 
 /* SONG CARD (profile) */
 .scard{background:white;border:1px solid var(--border);border-radius:10px;padding:22px 24px;cursor:pointer;transition:all .2s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,0.03);margin-bottom:10px}
@@ -165,15 +184,15 @@ a{text-decoration:none;color:inherit}
 .liner-card h3{font-family:'DM Serif Display',serif;font-style:italic;font-size:17px;color:var(--ink);margin-bottom:8px;font-weight:400}
 .liner-card p{font-size:13px;font-weight:300;color:var(--ink-dim);line-height:1.7}
 
-/* TJ FOOTER */
-.tj-footer{background:#1A1D24;padding:40px 40px 32px;margin-top:auto}
-.tj-footer-inner{display:flex;gap:24px;align-items:center;margin-bottom:20px}
-.tj-footer .tj-name{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#E8ECF2;letter-spacing:1px;line-height:1}
-.tj-footer .tj-tagline{font-size:13px;font-weight:300;color:#7A8698;line-height:1.5;margin-top:4px}
-.tj-footer-links{display:flex;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid rgba(232,236,242,0.06)}
-.tj-footer-link{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#7A8698;padding:5px 12px;border:1px solid rgba(232,236,242,0.08);border-radius:3px;transition:all .2s}
-.tj-footer-link:hover{color:#E8ECF2;border-color:rgba(232,236,242,0.2)}
-.tj-footer-copy{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(122,134,152,0.4);letter-spacing:1px;margin-top:16px}
+/* TJ FOOTER - full width, outside layout grid */
+.site-footer{background:#1A1D24;padding:40px 48px 32px;border-top:1px solid rgba(255,255,255,0.04)}
+.site-footer .tj-footer-inner{display:flex;gap:24px;align-items:center;margin-bottom:20px}
+.site-footer .tj-name{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#E8ECF2;letter-spacing:1px;line-height:1}
+.site-footer .tj-tagline{font-size:13px;font-weight:300;color:#7A8698;line-height:1.5;margin-top:4px}
+.site-footer .tj-footer-links{display:flex;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid rgba(232,236,242,0.06)}
+.site-footer .tj-footer-link{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#7A8698;padding:5px 12px;border:1px solid rgba(232,236,242,0.08);border-radius:3px;transition:all .2s}
+.site-footer .tj-footer-link:hover{color:#E8ECF2;border-color:rgba(232,236,242,0.2)}
+.site-footer .tj-footer-copy{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(122,134,152,0.4);letter-spacing:1px;margin-top:16px}
 
 /* PLAYER */
 .rp-header{padding:14px 20px;background:var(--player-surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0}
@@ -263,7 +282,12 @@ a{text-decoration:none;color:inherit}
   .sc-tagline,.sc-desc,.sc-tags{padding-left:0}
   .pull-quote{padding:20px 24px}
   .pull-quote q{font-size:18px}
-  .tj-footer{margin-left:-20px;margin-right:-20px;border-radius:0;padding:32px 20px 24px}
+  .site-footer{padding:32px 20px 24px}
+  .prof-banner{margin:-24px -20px 0;padding:32px 20px 28px}
+  .prof-name{font-size:40px!important}
+  .prof-avatar-lg{width:80px!important;height:80px!important}
+  .prof-stats{margin:0 -20px;padding:12px 20px}
+  .prof-quote q{font-size:18px!important}
 }
 @media(max-width:500px){.pgrid{grid-template-columns:1fr 1fr}}
 ::selection{background:var(--coral);color:white}
@@ -294,7 +318,7 @@ a{text-decoration:none;color:inherit}
       </div>
       <div class="rp-prog-row"><span class="rp-time" id="rpC">0:00</span><div class="rp-prog" id="rpProg" onclick="event.stopPropagation();seek(event)"><div class="rp-bar" id="rpB"></div></div><span class="rp-time" id="rpD" style="text-align:right">--:--</span></div>
     </div>
-    <div class="rp-tabs" id="rpTabs"><button class="rp-tab active" onclick="filterPL('all')">All</button><button class="rp-tab" onclick="filterPL('Folk Pop')">Folk Pop</button><button class="rp-tab" onclick="filterPL('Country Trap')">Country Trap</button><button class="rp-tab" onclick="filterPL('Pop Punk')">Pop Punk</button></div>
+    <div class="rp-tabs" id="rpTabs"><button class="rp-tab active" onclick="filterPL('all')">All</button><button class="rp-tab" onclick="filterPL('Mindset')">Mindset</button><button class="rp-tab" onclick="filterPL('Books')">Books</button><button class="rp-tab" onclick="filterPL('Entrepreneurship')">Biz</button><button class="rp-tab" onclick="filterPL('Discipline')">Grit</button></div>
     <div class="rp-playlist" id="rpPL"></div>
     <div class="rp-footer"><span id="rpCount"></span><a href="#">mindsetjukebox.com</a></div>
   </div>
@@ -567,7 +591,7 @@ function buildPlaylist(){
   pl.innerHTML='';
   S.forEach(function(s,i){
     var it=document.createElement('div');it.className='rp-item';if(i===ci)it.className+=' active';
-    it.setAttribute('data-genre',s.g);
+    it.setAttribute('data-genre',s.g);it.setAttribute('data-topics',s.tp.join(','));
     it.onclick=function(e){e.stopPropagation();playSong(i)};
     it.innerHTML='<div class="ri-num"><span class="ri-num-t">'+String(i+1).padStart(2,'0')+'</span><div class="ri-eq"><div class="rpie"></div><div class="rpie"></div><div class="rpie"></div></div></div><div class="ri-name">'+s.t+'</div><span class="ri-genre">'+s.g+'</span><div class="ri-dur">'+s.d+'</div>';
     pl.appendChild(it)
@@ -575,12 +599,15 @@ function buildPlaylist(){
   document.getElementById('rpCount').textContent=S.length+' Tracks';
 }
 
-function filterPL(genre){
+function filterPL(cat){
   document.querySelectorAll('.rp-tab').forEach(function(t){t.classList.remove('active')});
   event.target.classList.add('active');
   document.querySelectorAll('.rp-item').forEach(function(it){
-    if(genre==='all')it.style.display='';
-    else it.style.display=it.getAttribute('data-genre')===genre?'':'none';
+    if(cat==='all')it.style.display='';
+    else{
+      var topics=it.getAttribute('data-topics')||'';
+      it.style.display=topics.indexOf(cat)>=0?'':'none';
+    }
   });
 }
 
@@ -713,8 +740,9 @@ function renderProfile(slug,el){
 // ══════════════════════════════════════════════════
 // TJ FOOTER
 // ══════════════════════════════════════════════════
-function tjFooter(){
-  return '<div class="tj-footer"><div class="tj-footer-inner"><div style="width:56px;height:56px;border-radius:50%;flex-shrink:0;border:2px solid #2A2D34;background-image:url(tj-headshot.png);background-size:cover;background-position:center"></div><div style="flex:1"><div class="tj-name">BUILT BY TJ LARKIN</div><div class="tj-tagline">I build media brands, AI tools, and creative web experiences.</div></div></div><div class="tj-footer-links"><a href="https://www.localmediahq.com/" class="tj-footer-link">Local Media HQ</a><a href="https://www.lightbreak.ai/" class="tj-footer-link">Lightbreak</a><a href="https://tjlarkin.com/" class="tj-footer-link">Personal Site</a><a href="https://x.com/TJLarkin23" class="tj-footer-link">Twitter/X</a><a href="https://www.linkedin.com/in/tjlarkin1/" class="tj-footer-link">LinkedIn</a></div><div class="tj-footer-copy">Mindset Jukebox &middot; 2026</div></div>';
+function tjFooter(){return ''}
+function renderFooter(){
+  document.getElementById('siteFooter').innerHTML='<div style="max-width:900px;margin:0 auto"><div class="tj-footer-inner"><div style="width:48px;height:48px;border-radius:50%;flex-shrink:0;border:2px solid #2A2D34;background-image:url(tj-headshot.png);background-size:cover;background-position:center"></div><div style="flex:1"><div class="tj-name">BUILT BY TJ LARKIN</div><div class="tj-tagline">I build media brands, AI tools, and creative web experiences.</div></div></div><div class="tj-footer-links"><a href="https://www.localmediahq.com/" class="tj-footer-link">Local Media HQ</a><a href="https://www.lightbreak.ai/" class="tj-footer-link">Lightbreak</a><a href="https://tjlarkin.com/" class="tj-footer-link">Personal Site</a><a href="https://x.com/TJLarkin23" class="tj-footer-link">Twitter/X</a><a href="https://www.linkedin.com/in/tjlarkin1/" class="tj-footer-link">LinkedIn</a></div><div class="tj-footer-copy">Mindset Jukebox &middot; 2026</div></div>';
 }
 
 // ══════════════════════════════════════════════════
@@ -727,6 +755,7 @@ function mobToggle(){if(window.innerWidth<=900){pc.classList.toggle('mob-open');
 // ══════════════════════════════════════════════════
 loadTrack(0);
 buildPlaylist();
+renderFooter();
 render();
 </script>
 </body>
