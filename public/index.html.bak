@@ -22,7 +22,7 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 
-/* NAV - integrated into content area */
+/* NAV */
 .nav{height:54px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(246,243,237,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:100}
 .nav-brand{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--ink);cursor:pointer}
 .nav-brand span{color:var(--coral)}
@@ -32,10 +32,9 @@ a{text-decoration:none;color:inherit}
 .nav-link.active{color:var(--coral)}
 
 /* LAYOUT */
-.layout{display:grid;grid-template-columns:1fr 380px;min-height:100vh}
-.content-wrap{display:flex;flex-direction:column;min-height:100vh}
-.content{padding:40px 40px 0;overflow-y:auto;flex:1}
-.player-col{position:sticky;top:0;height:100vh;border-left:1px solid var(--border);background:var(--player-bg);display:flex;flex-direction:column;overflow:hidden}
+.layout{display:grid;grid-template-columns:1fr 380px;min-height:calc(100vh - 54px)}
+.content{padding:40px 40px 0;overflow-y:auto}
+.player-col{position:sticky;top:54px;height:calc(100vh - 54px);border-left:1px solid var(--border);background:var(--player-bg);display:flex;flex-direction:column;overflow:hidden}
 
 /* TYPOGRAPHY */
 .mono{font-family:'IBM Plex Mono',monospace}
@@ -130,7 +129,7 @@ a{text-decoration:none;color:inherit}
 .sr-dur{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint);flex-shrink:0}
 
 /* PROFILE PAGE */
-.prof-hero{display:flex;gap:24px;align-items:center;margin-bottom:24px}
+.prof-hero{display:flex;gap:24px;align-items:center;margin-bottom:36px}
 .prof-info{flex:1}
 .prof-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--coral);margin-bottom:3px}
 .prof-name{font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;letter-spacing:1px;color:var(--ink);margin-bottom:6px}
@@ -138,11 +137,6 @@ a{text-decoration:none;color:inherit}
 .prof-links{display:flex;gap:6px;flex-wrap:wrap}
 .prof-link{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ink-dim);padding:4px 10px;border:1px solid var(--border-h);border-radius:3px;background:white;transition:all .2s}
 .prof-link:hover{border-color:var(--coral);color:var(--coral)}
-
-/* PULL QUOTE */
-.pull-quote{margin:0 0 32px;padding:28px 32px;border-left:3px solid var(--coral);background:var(--coral-bg)}
-.pull-quote q{font-family:'DM Serif Display',serif;font-style:italic;font-size:22px;line-height:1.4;color:var(--ink);display:block;quotes:none}
-.pull-quote cite{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);display:block;margin-top:10px}
 
 /* SONG CARD (profile) */
 .scard{background:white;border:1px solid var(--border);border-radius:10px;padding:22px 24px;cursor:pointer;transition:all .2s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,0.03);margin-bottom:10px}
@@ -166,7 +160,7 @@ a{text-decoration:none;color:inherit}
 .liner-card p{font-size:13px;font-weight:300;color:var(--ink-dim);line-height:1.7}
 
 /* TJ FOOTER */
-.tj-footer{background:#1A1D24;padding:40px 40px 32px;margin-top:auto}
+.tj-footer{background:#1A1D24;padding:40px 40px 32px;margin-top:40px;border-radius:12px 12px 0 0}
 .tj-footer-inner{display:flex;gap:24px;align-items:center;margin-bottom:20px}
 .tj-footer .tj-name{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#E8ECF2;letter-spacing:1px;line-height:1}
 .tj-footer .tj-tagline{font-size:13px;font-weight:300;color:#7A8698;line-height:1.5;margin-top:4px}
@@ -261,8 +255,6 @@ a{text-decoration:none;color:inherit}
   .prof-hero{flex-direction:column;text-align:center;gap:12px}
   .prof-links{justify-content:center}
   .sc-tagline,.sc-desc,.sc-tags{padding-left:0}
-  .pull-quote{padding:20px 24px}
-  .pull-quote q{font-size:18px}
   .tj-footer{margin-left:-20px;margin-right:-20px;border-radius:0;padding:32px 20px 24px}
 }
 @media(max-width:500px){.pgrid{grid-template-columns:1fr 1fr}}
@@ -270,18 +262,16 @@ a{text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
-<div class="layout">
-  <div class="content-wrap">
-    <nav class="nav">
-      <span class="nav-brand" onclick="go('')">MINDSET <span>JUKEBOX</span></span>
-      <div class="nav-links">
-        <span class="nav-link active" onclick="go('')">Home</span>
-      </div>
-    </nav>
-    <div class="content" id="page"></div>
+<nav class="nav">
+  <span class="nav-brand" onclick="go('')">MINDSET <span>JUKEBOX</span></span>
+  <div class="nav-links">
+    <span class="nav-link active" onclick="go('')">Home</span>
   </div>
+</nav>
+<div class="layout">
+  <div class="content" id="page"></div>
   <div class="player-col" id="pc">
-    <div class="rp-header" onclick="mobToggle()"><div class="rp-dot"></div><span class="rp-htitle">MJ Player</span><span class="nav-link" onclick="event.stopPropagation();go('')" style="margin-left:auto;margin-right:8px;font-size:9px">Home</span><button class="rp-expand" id="rpExp" onclick="event.stopPropagation();mobToggle()">Open</button></div>
+    <div class="rp-header" onclick="mobToggle()"><div class="rp-dot"></div><span class="rp-htitle">MJ Player</span><button class="rp-expand" id="rpExp" onclick="event.stopPropagation();mobToggle()">Open</button></div>
     <div class="rp-record"><div style="position:relative;width:140px;height:140px"><div class="record"><div class="record-label"></div></div><div class="tonearm"></div></div></div>
     <div class="rp-now">
       <div class="rp-now-row">
@@ -294,7 +284,7 @@ a{text-decoration:none;color:inherit}
       </div>
       <div class="rp-prog-row"><span class="rp-time" id="rpC">0:00</span><div class="rp-prog" id="rpProg" onclick="event.stopPropagation();seek(event)"><div class="rp-bar" id="rpB"></div></div><span class="rp-time" id="rpD" style="text-align:right">--:--</span></div>
     </div>
-    <div class="rp-tabs" id="rpTabs"><button class="rp-tab active" onclick="filterPL('all')">All</button><button class="rp-tab" onclick="filterPL('Folk Pop')">Folk Pop</button><button class="rp-tab" onclick="filterPL('Country Trap')">Country Trap</button><button class="rp-tab" onclick="filterPL('Pop Punk')">Pop Punk</button></div>
+    <div class="rp-tabs" id="rpTabs"></div>
     <div class="rp-playlist" id="rpPL"></div>
     <div class="rp-footer"><span id="rpCount"></span><a href="#">mindsetjukebox.com</a></div>
   </div>
@@ -382,128 +372,31 @@ var S=[
   {id:"today-its-billionaires",t:"Today It's Billionaires",p:null,s:null,g:"Country Trap",tp:["Freedom","Contrarian"],d:"3:26",sec:206,f:"TJs Playlist/Today It's Billionaires.mp3",tl:"The target always moves down.",ds:"First they come for the billionaires. Then the millionaires. Then you."}
 ];
 var P=[
-  {s:"oliver-burkeman",n:"Oliver Burkeman",r:"Author, Four Thousand Weeks",tw:"oliverburkeman",
-   bio:"Wrote the book that made productivity gurus uncomfortable. Four Thousand Weeks argues you'll never get it all done, and that's the point.",
-   pq:"The average human lifespan is absurdly, terrifyingly, insultingly short.",
-   ln1:"Burkeman isn't anti-productivity. He's anti-delusion. His work forces you to confront the math: 4,000 weeks is all you get. The question isn't how to do more. It's how to choose what actually matters.",
-   ln2:"These tracks distill the uncomfortable truth at the core of Burkeman's writing. The music makes the urgency feel real in a way that reading about mortality on a page never quite does."},
-  {s:"david-goggins",n:"David Goggins",r:"Ultra-endurance athlete, Author",tw:"davidgoggins",
-   bio:"Went from 300 pounds and broken to one of the toughest humans alive. Proves that suffering is a choice you can use as fuel.",
-   pq:"Who's gonna carry the boats?",
-   ln1:"Goggins isn't motivational. He's confrontational. He doesn't want you to feel good about yourself. He wants you to be honest about how much more you have left in the tank. The answer is always more than you think.",
-   ln2:"Raw energy, no sugarcoating. These tracks capture the Goggins ethos: comfort is the enemy, the only way out is through, and nobody is coming to save you."},
-  {s:"jeff-bezos",n:"Jeff Bezos",r:"Amazon founder",tw:"JeffBezos",
-   bio:"Built the everything store by thinking in decades while everyone else thought in quarters. His decision frameworks changed how a generation of founders operate.",
-   pq:"In the short run, the market is a voting machine. In the long run, it's a weighing machine.",
-   ln1:"Bezos isn't just a billionaire. He's a decision architect. The regret minimization framework and two-way door thinking are tools anyone can use, whether you're building a company or deciding whether to quit your job.",
-   ln2:"Two tracks, two frameworks. One about making irreversible decisions with courage. One about making reversible decisions with speed. Together they're a masterclass in how to actually move."},
-  {s:"darren-hardy",n:"Darren Hardy",r:"Author, The Compound Effect",tw:"DarrenHardy",
-   bio:"Former publisher of SUCCESS magazine who proved that tiny daily choices, repeated over years, create massive results. No hacks, no shortcuts.",
-   pq:"It's not the big things that add up in the end; it's the hundreds, thousands, or millions of little things.",
-   ln1:"Hardy's message is boring on purpose. Do the small thing. Do it again tomorrow. And the next day. The compound effect isn't exciting until you look back five years later and realize you're unrecognizable.",
-   ln2:"This track captures the quiet power of consistency. No dramatic transformation montage. Just the daily grind that most people quit too early to see pay off."},
-  {s:"angela-duckworth",n:"Angela Duckworth",r:"Author, Grit",tw:"angeladuckw",
-   bio:"MacArthur Fellow who proved that passion plus perseverance beats raw talent in nearly every measurable domain. Changed how we think about success.",
-   pq:"Enthusiasm is common. Endurance is rare.",
-   ln1:"Duckworth's research destroyed the talent myth. The kids who won the spelling bee weren't smarter. The athletes who made the team weren't more gifted. They just kept going after everyone else stopped.",
-   ln2:"One track that hits at the core insight: talent is overrated, and the people who win are the ones who refuse to quit. Simple idea. Incredibly hard to live."},
-  {s:"nick-huber",n:"Nick Huber",r:"Sweaty Startup",tw:"sweatystartup",
-   bio:"Made millions from storage units and boring businesses while Twitter argued about AI startups. Proves that unglamorous plus essential equals unstoppable.",
-   pq:"The best businesses are the ones nobody brags about at dinner parties.",
-   ln1:"Huber's whole thing is that the sexiest business is the one that actually makes money. While founders chase venture capital and app store rankings, Huber buys storage units and prints cash. Nobody posts about it on LinkedIn. That's the point.",
-   ln2:"One track about the power of focus and boring business. No growth hacking, no viral loops. Just finding the one thing that works and going all in."},
-  {s:"naval-ravikant",n:"Naval Ravikant",r:"AngelList founder, Philosopher",tw:"naval",
-   bio:"Built AngelList, then became the internet's most-quoted philosopher on wealth, leverage, and happiness. His tweetstorms became a generation's operating manual.",
-   pq:"Play long-term games with long-term people.",
-   ln1:"Naval cracked something most people never figure out: wealth isn't about working harder. It's about leverage, specific knowledge, and accountability. His ideas read like fortune cookies until you realize each one contains a decade of hard-won insight.",
-   ln2:"The Long Game captures Naval's core philosophy in four minutes. Patience, compound interest applied to relationships and reputation, and the courage to play infinite games in a world obsessed with quick wins."},
-  {s:"ryan-holiday",n:"Ryan Holiday",r:"Author, The Obstacle Is the Way",tw:"RyanHoliday",
-   bio:"Brought Stoic philosophy to a generation that didn't know it needed Marcus Aurelius. His books turned ancient wisdom into modern operating systems.",
-   pq:"The impediment to action advances action. What stands in the way becomes the way.",
-   ln1:"Holiday didn't invent Stoicism. He translated it. Took ideas from Marcus Aurelius and Seneca and made them feel urgent and applicable for founders, athletes, and anyone facing something hard. That's a rare skill.",
-   ln2:"This track embodies the central Stoic paradox: the obstacle isn't blocking your path. It IS your path. The music makes that feel like a truth you already knew but forgot."},
-  {s:"steven-pressfield",n:"Steven Pressfield",r:"Author, The War of Art",tw:"SPressfield",
-   bio:"Named the invisible force that stops you from doing your best work. Resistance. Every creative person who's ever procrastinated owes Pressfield for diagnosing the disease.",
-   pq:"The more important a call or action is to our soul's evolution, the more Resistance we will feel toward pursuing it.",
-   ln1:"Pressfield gave a name to the thing every creator fights daily. That voice that says check your phone, start tomorrow, you're not ready. He called it Resistance, and naming it was the first step to beating it.",
-   ln2:"The Resistance isn't a self-help track. It's a battle hymn. For anyone who's sat down to do the work and felt every cell in their body trying to do anything else."},
-  {s:"peter-thiel",n:"Peter Thiel",r:"PayPal co-founder, Founders Fund",tw:null,
-   bio:"The contrarian's contrarian. Co-founded PayPal, made the first outside investment in Facebook, and wrote the book on building monopolies instead of competing.",
-   pq:"What important truth do very few people agree with you on?",
-   ln1:"Thiel's interview question is a filter. Most people can't answer it because most people don't actually think for themselves. His entire philosophy is built on the idea that consensus is the enemy of outsized returns.",
-   ln2:"Two tracks covering Thiel's two biggest ideas: the power of being contrarian and correct, and the difference between creating something new versus copying what exists. Zero to one thinking applied to music."},
-  {s:"shaan-puri",n:"Shaan Puri",r:"My First Million podcast",tw:"ShaanVP",
-   bio:"Turned business podcast conversations into a masterclass on picking the right game. His superpower is making complex strategy feel like advice from a smart friend.",
-   pq:"Most people are playing a game they never chose.",
-   ln1:"Puri's insight isn't about tactics. It's about game selection. Most people spend their entire careers optimizing for the wrong scoreboard. Shaan's message: before you try to win, make sure you picked the right game.",
-   ln2:"Wrong Game isn't just a song title. It's the question that should keep every ambitious person up at night. Am I winning at something I don't even want?"},
-  {s:"carol-dweck",n:"Carol Dweck",r:"Stanford psychologist, Author",tw:null,
-   bio:"Her research on fixed vs. growth mindset changed how schools teach, how coaches train, and how millions of people think about their own potential.",
-   pq:"Becoming is better than being.",
-   ln1:"Dweck proved that believing talent is fixed actually makes you worse. The students who believed they could grow outperformed the ones who believed they were gifted. One word changed everything: yet.",
-   ln2:"Yet is the most powerful word in the language. This track captures what it feels like to shift from 'I can't' to 'I can't... yet.' Small word. Massive psychological shift."},
-  {s:"bill-gurley",n:"Bill Gurley",r:"Benchmark Capital",tw:"bgurley",
-   bio:"One of Silicon Valley's sharpest venture capitalists who isn't afraid to call out how regulation protects incumbents at the expense of everyone else.",
-   pq:"The best VCs are the ones willing to look stupid for a few years.",
-   ln1:"Gurley sees what most investors miss: the real moat isn't technology. It's regulation. Incumbents don't compete. They lobby. And the consumer pays the price while thinking they're being protected.",
-   ln2:"Friend of the Incumbent exposes the game that most people don't even know is being played. Regulation as a weapon, not a shield. Gurley said the quiet part loud."},
-  {s:"seth-godin",n:"Seth Godin",r:"Author, Marketing legend",tw:"thisissethsblog",
-   bio:"Wrote more bestselling books about marketing, leadership, and shipping creative work than almost anyone alive. His daily blog is a 20-year masterclass in showing up.",
-   pq:"The cost of being wrong is less than the cost of doing nothing.",
-   ln1:"Godin's genius is making you feel stupid for not acting. Every excuse you've ever made for not shipping, not starting, not trying, he's already dismantled in a 200-word blog post. His message: inaction is the real risk.",
-   ln2:"Two tracks, two sides of the same coin. The Dip teaches you when to quit and when to push through. Inaction is a Choice reminds you that not deciding IS deciding. Godin in stereo."},
-  {s:"dale-carnegie",n:"Dale Carnegie",r:"Author, How to Win Friends",tw:null,
-   bio:"Wrote the book on human connection in 1936 and it still outsells most modern self-help. Turns out, the fundamentals of influence haven't changed in a century.",
-   pq:"You can make more friends in two months by becoming interested in other people than you can in two years by trying to get people interested in you.",
-   ln1:"Carnegie figured out the cheat code to influence almost a hundred years ago: shut up and listen. It sounds obvious. It's the hardest thing most people will ever try to do consistently.",
-   ln2:"Listen First is a six-minute reminder that the fastest path to influence runs through genuine curiosity about other people. Carnegie's lesson, set to music."},
-  {s:"scott-adams",n:"Scott Adams",r:"Dilbert creator, Author",tw:"ScottAdamsSays",
-   bio:"Created the most famous comic strip about office life, then wrote books about systems thinking and talent stacking that quietly influenced a generation of builders.",
-   pq:"Losers have goals. Winners have systems.",
-   ln1:"Adams figured out something counterintuitive: you don't need to be world-class at anything. Be pretty good at two or three complementary skills and you become rare and valuable. He calls it talent stacking.",
-   ln2:"Two tracks covering Adams' biggest ideas. Pretty Good at Three is about talent stacking. Loserthinking catalogs the mental traps that keep smart people stuck in dumb patterns. Both are more practical than most business books."},
-  {s:"nassim-taleb",n:"Nassim Taleb",r:"Author, Black Swan / Antifragile",tw:"nntaleb",
-   bio:"Former options trader who became the world's foremost thinker on risk, randomness, and building systems that gain from disorder. Intellectually fearless.",
-   pq:"Wind extinguishes a candle and energizes fire. You want to be the fire.",
-   ln1:"Taleb doesn't just think about risk differently. He lives it. His entire philosophy is built on one insight: some things break under stress, some survive, and the best things actually get stronger. Be the thing that gets stronger.",
-   ln2:"Two tracks, two frameworks. Skin in the Game is about trust and accountability. Antifragile is about building yourself into something that gains from chaos. Taleb's ideas hit different as music."},
-  {s:"annie-duke",n:"Annie Duke",r:"Author, Thinking in Bets",tw:"AnnieDuke",
-   bio:"Former World Series of Poker champion who turned poker decision-making into a framework for life. Teaches you to separate decision quality from outcome quality.",
-   pq:"The quality of our lives is the sum of decision quality plus luck.",
-   ln1:"Duke's breakthrough: a good decision can have a bad outcome, and a bad decision can have a good outcome. Most people judge decisions by results. That's backwards. She teaches you to judge the process.",
-   ln2:"Sunk Cost is the longest track in the catalog at nearly eight minutes, because killing your darlings takes time. Duke's message: the money you already spent is gone. The only question is what's the best move from here."},
-  {s:"shane-parrish",n:"Shane Parrish",r:"Farnam Street founder",tw:"ShaneAParrish",
-   bio:"Built Farnam Street into the internet's best resource for mental models and clear thinking. A former intelligence analyst who teaches you to see what others miss.",
-   pq:"The best way to get what you want is to deserve what you want.",
-   ln1:"Parrish collects mental models the way other people collect stamps. But his real gift is showing you the invisible costs of every decision. The thing you didn't consider. The second-order effect nobody warned you about.",
-   ln2:"The Unseen Cost captures Parrish's core teaching: every yes has a hidden no, every shortcut has a hidden price. The track makes you feel the weight of decisions most people make on autopilot."},
-  {s:"viktor-frankl",n:"Viktor Frankl",r:"Author, Man's Search for Meaning",tw:null,
-   bio:"Survived the Holocaust and emerged with the most important insight about human psychology ever written: the one thing no one can take from you is how you choose to respond.",
-   pq:"Between stimulus and response there is a space. In that space is our freedom.",
-   ln1:"Frankl found meaning in the darkest place on earth. His insight wasn't theoretical. He lived it in Auschwitz. When everything was taken from him, he discovered the one thing that couldn't be taken: the freedom to choose his response.",
-   ln2:"What Happens Next isn't a light listen. It's a track about the deepest kind of freedom, the kind that exists even when external freedom doesn't. Frankl's message set to music that makes you feel the weight and the hope simultaneously."},
-  {s:"morgan-housel",n:"Morgan Housel",r:"Author, Psychology of Money",tw:"morganhousel",
-   bio:"Wrote the book that made personal finance feel like psychology instead of spreadsheets. Proves that how you behave with money matters more than what you know about it.",
-   pq:"The highest form of wealth is the ability to wake up every morning and say, I can do whatever I want today.",
-   ln1:"Housel's genius is humility. In a world of confident financial predictions, he's the guy saying 'I don't know, and neither do you.' His message: the biggest financial risk is always the one you never saw coming.",
-   ln2:"What You Can't See captures the Housel philosophy in under four minutes. Risk isn't what you see coming. It's what you don't. The track makes uncertainty feel like something to respect, not fear."},
-  {s:"satoshi-nakamoto",n:"Satoshi Nakamoto",r:"Bitcoin creator",tw:null,
-   bio:"Published a nine-page whitepaper, launched a protocol that created a trillion-dollar asset class, then disappeared forever. The most consequential anonymous act in financial history.",
-   pq:"The root problem with conventional currency is all the trust that's required to make it work.",
-   ln1:"Nobody knows who Satoshi is. That's the point. Bitcoin wasn't built on a personality. It was built on math. A fixed supply of 21 million, no central authority, no permission needed. The code is the manifesto.",
-   ln2:"21 Million is a track about sound money for a broken system. No politics, no tribalism. Just the simple, radical idea that money should be scarce, verifiable, and beyond anyone's control."},
-  {s:"david-foster-wallace",n:"David Foster Wallace",r:"Author, This is Water",tw:null,
-   bio:"Gave the most important commencement speech ever recorded. Reminded a generation that the obvious truths are the easiest to forget, and that real freedom is attention.",
-   pq:"The really important kind of freedom involves attention and awareness and discipline.",
-   ln1:"Wallace's commencement speech at Kenyon College became something bigger than he probably intended. It's a manifesto for conscious living in a world designed to make you run on autopilot.",
-   ln2:"This is Water is the only Pop Punk track in the catalog because Wallace's message deserves energy that matches its urgency. The obvious realities are the hardest to see. Wake up."},
-  {s:"anthony-demello",n:"Anthony DeMello",r:"Author, Awareness",tw:null,
-   bio:"Jesuit priest who sounded more like a Zen master. His book Awareness is a guide to waking up from the trance most people mistake for living.",
-   pq:"Most people don't want to be cured. What they want is relief.",
-   ln1:"DeMello's message is simple and devastating: you're asleep, and you don't know it. Everything you think you want, you want because you were programmed to want it. Awareness is the first step to freedom.",
-   ln2:"Wake Up is the track for anyone who's ever felt like they're going through the motions. DeMello's philosophy turned into a song that might actually jolt you out of autopilot."}
+  {s:"oliver-burkeman",n:"Oliver Burkeman",r:"Author, Four Thousand Weeks",tw:"oliverburkeman"},
+  {s:"david-goggins",n:"David Goggins",r:"Ultra-endurance athlete, Author",tw:"davidgoggins"},
+  {s:"jeff-bezos",n:"Jeff Bezos",r:"Amazon founder",tw:"JeffBezos"},
+  {s:"darren-hardy",n:"Darren Hardy",r:"Author, The Compound Effect",tw:"DarrenHardy"},
+  {s:"angela-duckworth",n:"Angela Duckworth",r:"Author, Grit",tw:"angeladuckw"},
+  {s:"nick-huber",n:"Nick Huber",r:"Sweaty Startup",tw:"sweatystartup"},
+  {s:"naval-ravikant",n:"Naval Ravikant",r:"AngelList, Philosopher",tw:"naval"},
+  {s:"ryan-holiday",n:"Ryan Holiday",r:"Author, The Obstacle Is the Way",tw:"RyanHoliday"},
+  {s:"steven-pressfield",n:"Steven Pressfield",r:"Author, The War of Art",tw:"SPressfield"},
+  {s:"peter-thiel",n:"Peter Thiel",r:"PayPal, Founders Fund",tw:null},
+  {s:"shaan-puri",n:"Shaan Puri",r:"My First Million",tw:"ShaanVP"},
+  {s:"carol-dweck",n:"Carol Dweck",r:"Author, Mindset",tw:null},
+  {s:"bill-gurley",n:"Bill Gurley",r:"Benchmark Capital",tw:"bgurley"},
+  {s:"seth-godin",n:"Seth Godin",r:"Author, Marketing legend",tw:"thisissethsblog"},
+  {s:"dale-carnegie",n:"Dale Carnegie",r:"Author, How to Win Friends",tw:null},
+  {s:"scott-adams",n:"Scott Adams",r:"Dilbert creator, Author",tw:"ScottAdamsSays"},
+  {s:"nassim-taleb",n:"Nassim Taleb",r:"Author, Black Swan / Antifragile",tw:"nntaleb"},
+  {s:"annie-duke",n:"Annie Duke",r:"Author, Thinking in Bets",tw:"AnnieDuke"},
+  {s:"shane-parrish",n:"Shane Parrish",r:"Farnam Street",tw:"ShaneAParrish"},
+  {s:"viktor-frankl",n:"Viktor Frankl",r:"Author, Man's Search for Meaning",tw:null},
+  {s:"morgan-housel",n:"Morgan Housel",r:"Author, Psychology of Money",tw:"morganhousel"},
+  {s:"satoshi-nakamoto",n:"Satoshi Nakamoto",r:"Bitcoin creator",tw:null},
+  {s:"david-foster-wallace",n:"David Foster Wallace",r:"Author, This is Water",tw:null},
+  {s:"anthony-demello",n:"Anthony DeMello",r:"Author, Awareness",tw:null}
 ];
-
 P.forEach(function(p){p.tc=S.filter(function(x){return x.s===p.s}).length});
 
 // ══════════════════════════════════════════════════
@@ -567,21 +460,11 @@ function buildPlaylist(){
   pl.innerHTML='';
   S.forEach(function(s,i){
     var it=document.createElement('div');it.className='rp-item';if(i===ci)it.className+=' active';
-    it.setAttribute('data-genre',s.g);
     it.onclick=function(e){e.stopPropagation();playSong(i)};
     it.innerHTML='<div class="ri-num"><span class="ri-num-t">'+String(i+1).padStart(2,'0')+'</span><div class="ri-eq"><div class="rpie"></div><div class="rpie"></div><div class="rpie"></div></div></div><div class="ri-name">'+s.t+'</div><span class="ri-genre">'+s.g+'</span><div class="ri-dur">'+s.d+'</div>';
     pl.appendChild(it)
   });
   document.getElementById('rpCount').textContent=S.length+' Tracks';
-}
-
-function filterPL(genre){
-  document.querySelectorAll('.rp-tab').forEach(function(t){t.classList.remove('active')});
-  event.target.classList.add('active');
-  document.querySelectorAll('.rp-item').forEach(function(it){
-    if(genre==='all')it.style.display='';
-    else it.style.display=it.getAttribute('data-genre')===genre?'':'none';
-  });
 }
 
 // ══════════════════════════════════════════════════
@@ -674,20 +557,15 @@ function renderProfile(slug,el){
   h+=avatarHTML(slug,80);
   h+='<div class="prof-info"><div class="prof-eyebrow">Featured Profile</div>';
   h+='<h1 class="prof-name">'+person.n.toUpperCase()+'</h1>';
-  h+='<p class="prof-desc">'+(person.bio||person.r)+'</p>';
+  h+='<p class="prof-desc">'+person.r+'</p>';
   h+='<div class="prof-links">';
   if(person.tw)h+='<a href="https://x.com/'+person.tw+'" target="_blank" class="prof-link">@'+person.tw+'</a>';
   h+='<span class="prof-link" onclick="go(\'\')">&#8592; All People</span>';
   h+='</div></div></div>';
 
-  // Pull quote
-  if(person.pq){
-    h+='<div class="pull-quote"><q>'+person.pq+'</q><cite>'+person.n+'</cite></div>';
-  }
-
   // Songs
-  h+='<div class="sh"><span class="sh-label">'+songs.length+' Track'+(songs.length>1?'s':'')+'</span><div class="sh-line"></div></div>';
-  h+='<div style="margin-bottom:32px">';
+  h+='<div class="sh"><span class="sh-label">The Tracks</span><div class="sh-line"></div></div>';
+  h+='<div style="margin-bottom:40px">';
   songs.forEach(function(s){
     var gi=S.indexOf(s);
     h+='<div class="scard" data-si="'+gi+'" onclick="playSong('+gi+')">';
@@ -699,12 +577,10 @@ function renderProfile(slug,el){
   });
   h+='</div>';
 
-  // Liner notes - real content
+  // Liner notes
   h+='<div class="sh"><span class="sh-label">Liner Notes</span><div class="sh-line"></div></div>';
-  var ln1=person.ln1||('What makes '+person.n+' worth listening to? These tracks capture the core ideas that set them apart.');
-  var ln2=person.ln2||('Each song distills a concept into something you can feel. Hit play and absorb what took them years to figure out.');
-  h+='<div class="liner-grid"><div class="liner-card"><h3>Why '+person.n.split(' ')[0]+'?</h3><p>'+ln1+'</p></div>';
-  h+='<div class="liner-card"><h3>About '+(songs.length>1?'These Tracks':'This Track')+'</h3><p>'+ln2+'</p></div></div>';
+  h+='<div class="liner-grid"><div class="liner-card"><h3>Why '+person.n.split(' ')[0]+'?</h3><p>'+songs.length+' track'+(songs.length>1?'s':'')+' capturing the ideas that made '+person.n+' someone worth learning from. Hit play and absorb what took them years to figure out.</p></div>';
+  h+='<div class="liner-card"><h3>About These Tracks</h3><p>Each song is a radio-quality track built from a core concept. The music makes the idea stick. Listen once and you\'ll remember it forever.</p></div></div>';
 
   h+=tjFooter();
   el.innerHTML=h;
