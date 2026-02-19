@@ -257,24 +257,34 @@ a{text-decoration:none;color:inherit}
   .player-col.mob-open .rp-playlist{display:block}
   .rp-header{cursor:pointer}
   .rp-expand{display:block}
-  .content{padding:24px 20px 0}
-  .nav{padding:0 20px}
-  .hero h1{font-size:32px}
-  .pgrid{grid-template-columns:repeat(2,1fr)}
-  .prof-hero{grid-template-columns:1fr;min-height:auto}
-  .prof-photo{height:300px}
-  .prof-info{padding:28px 20px}
-  .prof-name{font-size:36px!important}
-  .quote-bar{padding:24px 24px 24px 40px;margin:0 -20px}
-  .quote-bar::before{left:20px}
-  .quote-bar q{font-size:18px}
-  .prof-stats{margin:0 -20px;padding:12px 20px}
-  .gatefold{grid-template-columns:1fr;margin:0 -20px}
+  .content{padding:20px 16px 100px}
+  .nav{padding:0 16px}
+  .hero h1{font-size:28px}
+  .hero-desc{font-size:14px}
+  .feat{grid-template-columns:1fr;gap:16px;padding:20px}
+  .feat img,.feat .avatar{margin:0 auto}
+  .pgrid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .pcard{padding:14px 10px}
+  .prof-hero{grid-template-columns:1fr;min-height:auto;margin:-20px -16px 0}
+  .prof-photo{height:280px}
+  .prof-info{padding:24px 16px}
+  .prof-name{font-size:28px!important}
+  .quote-bar{padding:20px 20px 20px 36px;margin:0 -16px}
+  .quote-bar::before{left:16px}
+  .quote-bar q{font-size:16px}
+  .prof-stats{margin:0 -16px;padding:12px 16px}
+  .gatefold{grid-template-columns:1fr;margin:0 -16px}
   .gf-notes{border-left:none;border-top:1px solid var(--ink-10)}
-  .site-footer{padding:40px 24px 0}
-  .ft-top{grid-template-columns:1fr;gap:32px}
+  .site-footer{padding:32px 16px 0}
+  .ft-top{grid-template-columns:1fr;gap:24px}
+  .tag{font-size:9px;padding:2px 6px}
+  .sh{font-size:9px}
 }
-@media(max-width:500px){.pgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){
+  .pgrid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:24px}
+  .prof-name{font-size:24px!important}
+}
 ::selection{background:var(--teal);color:white}
 </style>
 </head>
@@ -585,7 +595,7 @@ function renderHome(el){
   h+='<div style="font-family:\'Playfair Display\',serif;font-size:20px;font-weight:700;margin-bottom:4px">'+feat.t+'</div>';
   h+='<div class="pf-i" style="font-size:14px;color:var(--teal);margin-bottom:8px">'+feat.tl+'</div>';
   h+='<div style="font-size:13px;color:var(--ink-50);line-height:1.7;margin-bottom:10px">'+feat.ds+'</div>';
-  h+='<div style="display:flex;align-items:center;gap:12px"><button class="play-btn" style="width:36px;height:36px">'+playTri+'</button><span class="mono" style="font-size:11px;color:var(--ink-30)">'+feat.d+'</span><div style="margin-left:auto;display:flex;gap:6px"><span class="tag tag-genre">'+feat.g+'</span>'+feat.tp.map(function(t){return'<span class="tag tag-topic">'+t+'</span>'}).join('')+'</div></div>';
+  h+='<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><button class="play-btn" style="width:36px;height:36px">'+playTri+'</button><span class="mono" style="font-size:11px;color:var(--ink-30)">'+feat.d+'</span><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag tag-genre">'+feat.g+'</span>'+feat.tp.map(function(t){return'<span class="tag tag-topic">'+t+'</span>'}).join('')+'</div></div>';
   h+='</div></div></section>';
   h+='<section style="margin-bottom:36px"><div class="sh">Featured People</div><div class="pgrid">';
   P.forEach(function(p){
