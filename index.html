@@ -251,10 +251,12 @@ a{text-decoration:none;color:inherit}
 
 @media(max-width:900px){
   .layout{grid-template-columns:1fr}
-  .player-col{position:fixed;bottom:0;left:0;right:0;height:auto;max-height:70vh;border-left:none;border-top:1px solid var(--navy-border);border-radius:12px 12px 0 0;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,0.15);overflow:hidden}
-  .player-col .rp-record,.player-col .rp-tabs,.player-col .rp-playlist,.player-col .rp-footer{display:none}
-  .player-col.mob-open .rp-tabs,.player-col.mob-open .rp-footer{display:flex}
-  .player-col.mob-open .rp-playlist{display:block}
+  .player-col{position:fixed;bottom:0;left:0;right:0;height:auto;max-height:none;border-left:none;border-top:1px solid var(--navy-border);border-radius:12px 12px 0 0;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,0.15);overflow:hidden}
+  .player-col .rp-record,.player-col .rp-tabs,.player-col .rp-playlist,.player-col .rp-footer{display:none!important}
+  .player-col.mob-open{max-height:70vh;overflow-y:auto}
+  .player-col.mob-open .rp-tabs,.player-col.mob-open .rp-footer{display:flex!important}
+  .player-col.mob-open .rp-playlist{display:block!important}
+  .player-col.mob-open .rp-record{display:none!important}
   .rp-header{cursor:pointer}
   .rp-expand{display:block}
   .content{padding:20px 16px 100px}
