@@ -373,7 +373,7 @@ a{text-decoration:none;color:inherit}
 <div id="mobPlayer" style="display:block!important;position:fixed!important;bottom:16px!important;right:16px!important;z-index:99999!important;width:300px!important;max-width:calc(100vw - 32px)!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;transform:none!important">
   <!-- MINI BAR -->
   <div id="mpMini" style="background:#1a1f2e;border:2px solid #0d9488;border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,0.4);position:relative;overflow:hidden">
-    <div style="height:3px;background:#0f1520;position:absolute;bottom:0;left:0;right:0"><div id="mobProg" style="height:100%;background:#0d9488;width:0%;transition:width .3s linear"></div></div>
+    <div onclick="mobSeek(event)" style="height:12px;background:#0f1520;position:absolute;bottom:0;left:0;right:0;cursor:pointer;padding-top:9px"><div id="mobProg" style="height:100%;background:#0d9488;width:0%;transition:width .3s linear"></div></div>
     <button onclick="togglePlay()" style="width:36px;height:36px;border-radius:50%;background:#0d9488;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg id="mpIco" viewBox="0 0 24 24" style="fill:white;width:14px;height:14px"><polygon points="8 4 20 12 8 20"/></svg></button>
     <button onclick="prevTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#6b7890;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
     <button onclick="nextTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#6b7890;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
@@ -409,7 +409,7 @@ a{text-decoration:none;color:inherit}
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
         <span id="mpC2" style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,0.2);width:32px">0:00</span>
-        <div style="flex:1;background:rgba(255,255,255,0.08);height:4px;border-radius:2px;overflow:hidden"><div id="mobProg2" style="height:100%;background:#0d9488;width:0%;transition:width .3s linear"></div></div>
+        <div onclick="mobSeek(event)" style="flex:1;background:rgba(255,255,255,0.08);height:12px;border-radius:2px;overflow:hidden;cursor:pointer;padding-top:4px"><div id="mobProg2" style="height:100%;background:#0d9488;width:0%;transition:width .3s linear"></div></div>
         <span id="mpD2" style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,0.2);width:32px;text-align:right">0:00</span>
       </div>
     </div>
@@ -618,7 +618,7 @@ var playTri='<svg width="12" height="12" viewBox="0 0 24 24"><polygon points="7 
 var audio=document.getElementById('audio');
 var ci=0,playing=false;
 var pc=document.getElementById('pc');
-function loadTrack(i){ci=i;var s=S[i];audio.src=AB+encodeURI(s.f);document.getElementById('rpT').textContent=s.t;document.getElementById('rpA').textContent=s.p||'Mindset Jukebox';document.getElementById('rpG').textContent=s.g;document.getElementById('rpD').textContent=s.d;document.getElementById('rpC').textContent='0:00';document.getElementById('rpB').style.width='0%';updateActive()}
+function loadTrack(i){ci=i;var s=S[i];audio.src=AB+encodeURI(s.f);document.getElementById('rpT').textContent=s.t;document.getElementById('rpA').textContent=s.p||'Mindset Jukebox';document.getElementById('rpG').textContent=s.g;document.getElementById('rpD').textContent=s.d;document.getElementById('rpC').textContent='0:00';document.getElementById('rpB').style.width='0%';updateActive();updateMobPlayer()}
 function playSong(i){loadTrack(i);audio.play().catch(function(){});playing=true;pc.classList.add('playing');document.getElementById('rpIp').style.display='none';document.getElementById('rpIpa').style.display='block';updateActive()}
 function togglePlay(){if(!playing){audio.play().catch(function(){});playing=true;pc.classList.add('playing');document.getElementById('rpIp').style.display='none';document.getElementById('rpIpa').style.display='block';updateActive()}else{audio.pause();playing=false;pc.classList.remove('playing');document.getElementById('rpIp').style.display='block';document.getElementById('rpIpa').style.display='none';updateActive()}}
 function nextTrack(){playSong((ci+1)%S.length)}
@@ -788,6 +788,13 @@ function updateMobPlayer(){
   var a2=document.getElementById('mpA2');if(a2)a2.textContent=s.p||'';
   var d2=document.getElementById('mpD2');if(d2)d2.textContent=s.d||'';
   if(document.getElementById('mpExpanded').style.display!=='none')buildMobPlaylist();
+}
+function mobSeek(e){
+  var bar=e.currentTarget;
+  var rect=bar.getBoundingClientRect();
+  var pct=(e.clientX-rect.left)/rect.width;
+  if(pct<0)pct=0;if(pct>1)pct=1;
+  if(audio.duration)audio.currentTime=pct*audio.duration;
 }
 function toggleMobExpand(){
   var mini=document.getElementById('mpMini');
