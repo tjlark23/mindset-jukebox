@@ -202,7 +202,7 @@ a{text-decoration:none;color:inherit}
 .rp-playlist{flex:1;overflow-y:auto;background:var(--navy)}
 .rp-playlist::-webkit-scrollbar{width:3px}
 .rp-playlist::-webkit-scrollbar-thumb{background:var(--navy-faint);border-radius:2px}
-.rp-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:background .1s;border-bottom:1px solid var(--navy-border)}
+.rp-item{display:flex;align-items:center;gap:10px;padding:12px 20px;cursor:pointer;transition:background .1s;border-bottom:1px solid var(--navy-border)}
 .rp-item:last-child{border-bottom:none}
 .rp-item:hover{background:rgba(13,148,136,0.04)}
 .rp-item.active{background:rgba(13,148,136,0.08)}
@@ -215,8 +215,11 @@ a{text-decoration:none;color:inherit}
 .rp-item.active .rpie:nth-child(1){animation:e1 .6s ease-in-out infinite alternate}
 .rp-item.active .rpie:nth-child(2){animation:e2 .5s ease-in-out infinite alternate}
 .rp-item.active .rpie:nth-child(3){animation:e3 .7s ease-in-out infinite alternate}
-.ri-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--navy-song);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rp-item.active .ri-name{color:white}
+.ri-name{flex:1;min-width:0;overflow:hidden}
+.ri-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--navy-song);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri-artist{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--navy-dim);letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.rp-item.active .ri-title{color:white}
+.rp-item.active .ri-artist{color:rgba(255,255,255,0.6)}
 .ri-genre{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:0.5px;text-transform:uppercase;color:var(--teal);background:rgba(13,148,136,0.1);padding:2px 5px;border-radius:2px;flex-shrink:0;border-left:1.5px solid rgba(13,148,136,0.25)}
 .ri-dur{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--navy-faint);flex-shrink:0}
 .rp-footer{padding:9px 20px;border-top:1px solid var(--navy-border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:var(--navy-up)}
@@ -250,41 +253,85 @@ a{text-decoration:none;color:inherit}
 .prof-handle{animation-delay:0.3s!important}
 
 @media(max-width:900px){
+  /* LAYOUT: single column, player at bottom */
   .layout{grid-template-columns:1fr}
-  .player-col{position:fixed;bottom:0;left:0;right:0;height:auto;max-height:none;border-left:none;border-top:1px solid var(--navy-border);border-radius:12px 12px 0 0;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,0.15);overflow:hidden}
-  .player-col .rp-record,.player-col .rp-tabs,.player-col .rp-playlist,.player-col .rp-footer{display:none!important}
-  .player-col.mob-open{max-height:70vh;overflow-y:auto}
-  .player-col.mob-open .rp-tabs,.player-col.mob-open .rp-footer{display:flex!important}
+  
+  /* PLAYER: fixed bottom bar, collapsed by default */
+  .player-col{
+    position:fixed;bottom:0;left:0;right:0;
+    height:auto;max-height:none;
+    border-left:none;border-top:1px solid var(--navy-border);
+    border-radius:12px 12px 0 0;
+    z-index:200;
+    box-shadow:0 -4px 20px rgba(0,0,0,0.15);
+    overflow:hidden
+  }
+  /* Hide everything except header + now-playing when collapsed */
+  .player-col .rp-record,
+  .player-col .rp-tabs,
+  .player-col .rp-playlist,
+  .player-col .rp-footer{display:none!important}
+  
+  /* Expanded state */
+  .player-col.mob-open{max-height:75vh;overflow-y:auto}
+  .player-col.mob-open .rp-tabs,
+  .player-col.mob-open .rp-footer{display:flex!important}
   .player-col.mob-open .rp-playlist{display:block!important}
   .player-col.mob-open .rp-record{display:none!important}
+  
   .rp-header{cursor:pointer}
   .rp-expand{display:block}
-  .content{padding:20px 16px 100px}
+  
+  /* CONTENT: proper padding + space for player bar */
+  .content{padding:20px 16px 120px}
   .nav{padding:0 16px}
-  .hero h1{font-size:28px}
-  .hero-desc{font-size:14px}
-  .feat{grid-template-columns:1fr;gap:16px;padding:20px}
-  .feat img,.feat .avatar{margin:0 auto}
+  
+  /* HOMEPAGE */
+  .hero h1{font-size:26px;letter-spacing:-0.3px}
+  .hero-desc{font-size:14px;line-height:1.6;margin-bottom:16px}
+  .hero-actions .btn{font-size:10px;padding:10px 18px}
+  
+  /* Featured card: stack vertically */
+  .feat{grid-template-columns:1fr;gap:14px;padding:18px;text-align:center}
+  .feat .avatar{margin:0 auto}
+  
+  /* People grid */
   .pgrid{grid-template-columns:repeat(2,1fr);gap:8px}
   .pcard{padding:14px 10px}
+  
+  /* Section headers */
+  .sh{font-size:9px;letter-spacing:2px}
+  
+  /* Tags */
+  .tag{font-size:8px;padding:2px 5px}
+  
+  /* PROFILE PAGE */
   .prof-hero{grid-template-columns:1fr;min-height:auto;margin:-20px -16px 0}
-  .prof-photo{height:280px}
+  .prof-photo{height:260px}
   .prof-info{padding:24px 16px}
   .prof-name{font-size:28px!important}
+  
   .quote-bar{padding:20px 20px 20px 36px;margin:0 -16px}
   .quote-bar::before{left:16px}
-  .quote-bar q{font-size:16px}
+  .quote-bar q{font-size:16px;line-height:1.5}
+  
   .prof-stats{margin:0 -16px;padding:12px 16px}
+  
   .gatefold{grid-template-columns:1fr;margin:0 -16px}
   .gf-notes{border-left:none;border-top:1px solid var(--ink-10)}
+  
+  /* FOOTER */
   .site-footer{padding:32px 16px 0}
   .ft-top{grid-template-columns:1fr;gap:24px}
-  .tag{font-size:9px;padding:2px 6px}
-  .sh{font-size:9px}
 }
-@media(max-width:500px){
-  .pgrid{grid-template-columns:1fr 1fr}
-  .hero h1{font-size:24px}
+@media(max-width:420px){
+  .pgrid{grid-template-columns:1fr 1fr;gap:6px}
+  .pcard{padding:12px 8px}
+  .hero h1{font-size:22px}
+  .prof-name{font-size:24px!important}
+  .prof-photo{height:220px}
+  .feat{padding:14px}
+}
   .prof-name{font-size:24px!important}
 }
 ::selection{background:var(--teal);color:white}
@@ -377,26 +424,7 @@ var S=[
   {id:"what-you-cant-see",t:"What You Can't See",p:"Morgan Housel",s:"morgan-housel",g:"Folk Pop",tp:["Books","Mindset"],d:"3:37",sec:217,f:"TJs Playlist/What You Can't See (Morgan Housel).mp3",tl:"Risk is what you don't see coming.",ds:"The biggest financial risk is the one you never saw coming. Housel's lesson: humility about what you don't know matters more than confidence in what you do."},
   {id:"21-million",t:"21 Million",p:"Satoshi Nakamoto",s:"satoshi-nakamoto",g:"Folk Pop",tp:["Contrarian","Freedom"],d:"4:39",sec:279,f:"TJs Playlist/21 Million (Satoshi).mp3",tl:"Sound money for a broken system.",ds:"A fixed supply. No central authority. No printing press. Satoshi built the exit from a system that was never designed to protect you."},
   {id:"wake-up",t:"Wake Up",p:"Anthony DeMello",s:"anthony-demello",g:"Folk Pop",tp:["Books","Mindset"],d:"3:37",sec:217,f:"Showcase/Wake Up v2.mp3",tl:"You're asleep and you don't know it.",ds:"Most people sleepwalk through life attached to things that don't matter. DeMello's message: awareness is the first step to freedom."},
-  {id:"this-is-water",t:"This is Water",p:"David Foster Wallace",s:"david-foster-wallace",g:"Pop Punk",tp:["Books","Mindset"],d:"4:10",sec:250,f:"Showcase/This is Water.mp3",tl:"The obvious truths are the easiest to forget.",ds:"The most important realities are the hardest to see. Wallace's commencement speech became a manifesto for conscious living."},
-  {id:"ahead-and-behind",t:"Ahead & Behind",p:null,s:null,g:"Folk Pop",tp:["Mindset"],d:"4:12",sec:252,f:"Showcase/Ahead & Behind.mp3",tl:"Comparison is the thief of joy.",ds:"Everyone is ahead of you at something and behind you at something else. The only race that matters is with who you were yesterday."},
-  {id:"everything-compounds",t:"Everything Compounds",p:null,s:null,g:"Folk Pop",tp:["Habits","Mindset"],d:"3:53",sec:233,f:"Showcase/Everything Compounds.mp3",tl:"Time is the multiplier.",ds:"Money compounds. Knowledge compounds. Relationships compound. The question is whether you're compounding in the right direction."},
-  {id:"curious",t:"Curious",p:null,s:null,g:"Folk Pop",tp:["Mindset","Creativity"],d:"7:49",sec:469,f:"Showcase/Curious.mp3",tl:"Stay curious or stay stuck.",ds:"Curiosity is the skill nobody teaches but everyone needs."},
-  {id:"onto-something",t:"Onto Something",p:null,s:null,g:"Folk Pop",tp:["Entrepreneurship"],d:"4:13",sec:253,f:"Showcase/Onto Something.mp3",tl:"Trust the signal before the proof.",ds:"That feeling when the pieces start clicking. You can't prove it yet, but you know you're onto something."},
-  {id:"one-more-prompt",t:"One More Prompt",p:null,s:null,g:"Folk Pop",tp:["AI","Creativity"],d:"3:54",sec:234,f:"Showcase/One More Prompt.mp3",tl:"The next prompt might change everything.",ds:"The AI age rewards the people who keep iterating. One more prompt, one more try, one more angle."},
-  {id:"build-mode",t:"Build Mode",p:null,s:null,g:"Folk Pop",tp:["Entrepreneurship","AI"],d:"4:37",sec:277,f:"TJs Playlist/Build Mode.mp3",tl:"Ship it or it doesn't exist.",ds:"Head down, notifications off, shipping product. Build mode is where ideas become real and dreamers become builders."},
-  {id:"what-if-we-win",t:"What if We Win",p:null,s:null,g:"Folk Pop",tp:["Mindset","Entrepreneurship"],d:"3:44",sec:224,f:"Showcase/What if We Win.mp3",tl:"The scariest question is the best one.",ds:"Everyone plans for failure. Nobody plans for success. What if this actually works? Are you ready for that?"},
-  {id:"better-than-yesterday",t:"Better Than Yesterday",p:null,s:null,g:"Folk Pop",tp:["Habits","Mindset"],d:"3:12",sec:192,f:"Showcase/Better Than Yesterday - slow.mp3",tl:"1% better, compounded daily.",ds:"Not better than everyone else. Just better than the person you were 24 hours ago."},
-  {id:"blink",t:"Blink",p:null,s:null,g:"Folk Pop",tp:["Mindset","Family"],d:"4:23",sec:263,f:"Showcase/Blink.mp3",tl:"Don't blink.",ds:"Life moves fast. Blink and your kids are grown, your window closed, your chance gone."},
-  {id:"fit-minds-fit-bodies",t:"Fit Minds & Fit Bodies",p:null,s:null,g:"Folk Pop",tp:["Habits","Discipline"],d:"4:38",sec:278,f:"Showcase/Fit Minds & Fit Bodies.mp3",tl:"The body keeps score and so does the mind.",ds:"Your body and brain aren't separate systems. Train both and they amplify each other."},
-  {id:"lead-with-kindness",t:"Lead With Kindness",p:null,s:null,g:"Folk Pop",tp:["Mindset"],d:"4:43",sec:283,f:"Showcase/Lead With Kindness.mp3",tl:"Kindness is strategy.",ds:"Kindness isn't weakness. It's the highest-leverage move in any room."},
-  {id:"the-person-who",t:"The Person Who",p:null,s:null,g:"Folk Pop",tp:["Mindset"],d:"3:50",sec:230,f:"Showcase/The Person Who.mp3",tl:"Action creates identity.",ds:"You become the person who does the thing by doing the thing. Identity follows action, not the other way around."},
-  {id:"summer-of-75",t:"Summer of '75",p:null,s:null,g:"Folk Pop",tp:["Family"],d:"3:38",sec:218,f:"Showcase/Summer of '75.mp3",tl:"Before everything got complicated.",ds:"A throwback to simpler times. No screens, no algorithms, just long days and real connection."},
-  {id:"these-streets",t:"These Streets",p:null,s:null,g:"Folk Pop",tp:["Family"],d:"4:50",sec:290,f:"Showcase/These Streets.mp3",tl:"You can leave but it never leaves you.",ds:"The streets that shaped you. The neighborhood that raised you."},
-  {id:"dont-price-me-out",t:"Don't Price Me Out",p:null,s:null,g:"Country Trap",tp:["Freedom"],d:"3:59",sec:239,f:"Showcase/Don't Price Me Out.mp3",tl:"Priced out of the place you built.",ds:"When the cost of living outpaces the cost of leaving, something's broken."},
-  {id:"collectivist-city",t:"Collectivist City",p:null,s:null,g:"Country Trap",tp:["Freedom"],d:"4:01",sec:241,f:"TJs Playlist/Collectivist City.mp3",tl:"Your freedom, their vote.",ds:"When the city decides what's best for you. Rules, permits, committees."},
-  {id:"school-zone",t:"School Zone",p:null,s:null,g:"Country Trap",tp:["Freedom"],d:"4:57",sec:297,f:"TJs Playlist/School Zone (1).mp3",tl:"Slow down, sit down, don't ask questions.",ds:"The system was built to produce workers, not thinkers."},
-  {id:"they-keep-printing",t:"They Keep Printing",p:null,s:null,g:"Country Trap",tp:["Freedom","Contrarian"],d:"2:44",sec:164,f:"TJs Playlist/They Keep Printing.mp3",tl:"Inflation is the silent tax.",ds:"The money printer goes brrr and your savings go down."},
-  {id:"today-its-billionaires",t:"Today It's Billionaires",p:null,s:null,g:"Country Trap",tp:["Freedom","Contrarian"],d:"3:26",sec:206,f:"TJs Playlist/Today It's Billionaires.mp3",tl:"The target always moves down.",ds:"First they come for the billionaires. Then the millionaires. Then you."}
+  {id:"this-is-water",t:"This is Water",p:"David Foster Wallace",s:"david-foster-wallace",g:"Pop Punk",tp:["Books","Mindset"],d:"4:10",sec:250,f:"Showcase/This is Water.mp3",tl:"The obvious truths are the easiest to forget.",ds:"The most important realities are the hardest to see. Wallace's commencement speech became a manifesto for conscious living."}
 ];
 var P=[
   {s:"oliver-burkeman",n:"Oliver Burkeman",r:"Author, Four Thousand Weeks",tw:"oliverburkeman",
@@ -554,7 +582,7 @@ function buildPlaylist(){
     var it=document.createElement('div');it.className='rp-item';if(i===ci)it.className+=' active';
     it.setAttribute('data-genre',s.g);it.setAttribute('data-topics',s.tp.join(','));
     it.onclick=function(e){e.stopPropagation();playSong(i)};
-    it.innerHTML='<div class="ri-num"><span class="ri-num-t">'+String(i+1).padStart(2,'0')+'</span><div class="ri-eq"><div class="rpie"></div><div class="rpie"></div><div class="rpie"></div></div></div><div class="ri-name">'+s.t+'</div><span class="ri-genre">'+s.g+'</span><div class="ri-dur">'+s.d+'</div>';
+    it.innerHTML='<div class="ri-num"><span class="ri-num-t">'+String(i+1).padStart(2,'0')+'</span><div class="ri-eq"><div class="rpie"></div><div class="rpie"></div><div class="rpie"></div></div></div><div class="ri-name"><div class="ri-title">'+s.t+'</div><div class="ri-artist">'+(s.p||'')+'</div></div><span class="ri-genre">'+s.g+'</span><div class="ri-dur">'+s.d+'</div>';
     pl.appendChild(it)
   });
   document.getElementById('rpCount').textContent=S.length+' Tracks';
