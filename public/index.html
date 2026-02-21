@@ -256,34 +256,11 @@ a{text-decoration:none;color:inherit}
   /* LAYOUT: single column, player at bottom */
   .layout{grid-template-columns:1fr}
   
-  /* PLAYER: fixed bottom bar, collapsed by default */
-  .player-col{
-    position:fixed;bottom:0;left:0;right:0;
-    height:auto;max-height:none;
-    border-left:none;border-top:1px solid var(--navy-border);
-    border-radius:12px 12px 0 0;
-    z-index:200;
-    box-shadow:0 -4px 20px rgba(0,0,0,0.15);
-    overflow:hidden
-  }
-  /* Hide everything except header + now-playing when collapsed */
-  .player-col .rp-record,
-  .player-col .rp-tabs,
-  .player-col .rp-playlist,
-  .player-col .rp-footer{display:none!important}
-  
-  /* Expanded state */
-  .player-col.mob-open{max-height:75vh;overflow-y:auto}
-  .player-col.mob-open .rp-tabs,
-  .player-col.mob-open .rp-footer{display:flex!important}
-  .player-col.mob-open .rp-playlist{display:block!important}
-  .player-col.mob-open .rp-record{display:none!important}
-  
-  .rp-header{cursor:pointer}
-  .rp-expand{display:block}
+  /* COMPLETELY HIDE desktop player on mobile */
+  .player-col{display:none!important}
   
   /* CONTENT: proper padding + space for player bar */
-  .content{padding:20px 16px 120px}
+  .content{padding:20px 16px 80px}
   .nav{padding:0 16px}
   
   /* HOMEPAGE */
@@ -334,6 +311,29 @@ a{text-decoration:none;color:inherit}
 }
   .prof-name{font-size:24px!important}
 }
+
+/* MOBILE FLOATING PLAYER */
+.mob-player{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;font-family:'JetBrains Mono',monospace}
+.mob-bar{background:var(--navy);border-top:2px solid var(--teal);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.mob-bar .mp-play{width:38px;height:38px;border-radius:50%;background:var(--teal);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mob-bar .mp-play svg{fill:white;width:14px;height:14px}
+.mob-bar .mp-skip{background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
+.mob-bar .mp-skip svg{stroke:var(--navy-dim);width:14px;height:14px;fill:none;stroke-width:2}
+.mob-bar .mp-info{flex:1;min-width:0;overflow:hidden}
+.mob-bar .mp-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mob-bar .mp-artist{font-size:9px;color:var(--navy-dim);letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mob-bar .mp-time{font-size:9px;color:var(--navy-faint);flex-shrink:0}
+.mob-bar .mp-list-btn{background:none;border:1px solid var(--navy-border);border-radius:4px;cursor:pointer;padding:6px 8px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.mob-bar .mp-list-btn svg{stroke:var(--navy-dim);width:16px;height:16px;fill:none;stroke-width:2}
+.mob-prog{height:3px;background:var(--navy-up);position:absolute;top:0;left:0;right:0}
+.mob-prog-bar{height:100%;background:var(--teal);width:0%;transition:width .3s linear}
+.mob-sheet{position:fixed;bottom:0;left:0;right:0;top:0;z-index:299;display:none}
+.mob-sheet.open{display:block}
+.mob-sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,0.5)}
+.mob-sheet-panel{position:absolute;bottom:56px;left:0;right:0;max-height:65vh;background:var(--navy);border-top:2px solid var(--teal);overflow-y:auto;border-radius:12px 12px 0 0}
+.mob-sheet-head{padding:14px 16px;border-bottom:1px solid var(--navy-border);display:flex;justify-content:space-between;align-items:center}
+.mob-sheet-head span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--teal)}
+.mob-sheet-head button{background:none;border:none;color:var(--navy-dim);font-size:20px;cursor:pointer;padding:0 4px}
 ::selection{background:var(--teal);color:white}
 </style>
 </head>
@@ -367,6 +367,26 @@ a{text-decoration:none;color:inherit}
 </div>
 <footer class="site-footer" id="siteFooter"></footer>
 <audio id="audio" preload="none"></audio>
+<!-- MOBILE FLOATING PLAYER -->
+<div class="mob-player" id="mobPlayer">
+  <div class="mob-sheet" id="mobSheet">
+    <div class="mob-sheet-bg" onclick="closeMobSheet()"></div>
+    <div class="mob-sheet-panel" id="mobSheetList"></div>
+  </div>
+  <div class="mob-bar">
+    <div class="mob-prog"><div class="mob-prog-bar" id="mobProg"></div></div>
+    <button class="mp-play" onclick="togglePlay()"><svg id="mpIco" viewBox="0 0 24 24"><polygon points="8 4 20 12 8 20"/></svg></button>
+    <button class="mp-skip" onclick="prevTrack()"><svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
+    <button class="mp-skip" onclick="nextTrack()"><svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
+    <div class="mp-info">
+      <div class="mp-title" id="mpT">Select a Track</div>
+      <div class="mp-artist" id="mpA"></div>
+    </div>
+    <span class="mp-time" id="mpC">0:00</span>
+    <button class="mp-list-btn" onclick="toggleMobSheet()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  </div>
+</div>
+
 <script>
 var AB="https://raw.githubusercontent.com/tjlark23/SFYS-music/main/";
 var PHOTOS={
@@ -707,7 +727,58 @@ function renderFooter(){
 
 function mobToggle(){if(window.innerWidth<=900){pc.classList.toggle('mob-open');document.getElementById('rpExp').textContent=pc.classList.contains('mob-open')?'Close':'Open'}}
 
-loadTrack(0);buildPlaylist();renderFooter();render();
+loadTrack(0);buildPlaylist();renderFooter();
+// Sync mobile play icon
+audio.addEventListener('play',function(){
+  var ico=document.getElementById('mpIco');
+  if(ico)ico.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';
+  document.getElementById('pc').classList.add('playing');
+});
+audio.addEventListener('pause',function(){
+  var ico=document.getElementById('mpIco');
+  if(ico)ico.innerHTML='<polygon points="8 4 20 12 8 20"/>';
+  document.getElementById('pc').classList.remove('playing');
+});
+
+// MOBILE PLAYER
+function updateMobPlayer(){
+  if(ci<0)return;
+  var s=S[ci];
+  document.getElementById('mpT').textContent=s.t;
+  document.getElementById('mpA').textContent=s.p||'';
+}
+function toggleMobSheet(){
+  var sh=document.getElementById('mobSheet');
+  if(sh.classList.contains('open')){closeMobSheet()}
+  else{
+    var html='<div class="mob-sheet-head"><span>'+S.length+' Tracks</span><button onclick="closeMobSheet()">&times;</button></div>';
+    S.forEach(function(s,i){
+      var act=i===ci?' style="background:rgba(13,148,136,0.12)"':'';
+      html+='<div onclick="playSong('+i+');closeMobSheet()"'+act+' style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">';
+      html+='<div style="font-family:Playfair Display,serif;font-size:13px;font-weight:700;color:'+(i===ci?'white':'var(--navy-song)')+'">'+s.t+'</div>';
+      html+='<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:'+(i===ci?'rgba(255,255,255,0.6)':'var(--navy-dim)')+';letter-spacing:0.5px;margin-top:2px">'+(s.p||'')+' \u00b7 '+s.d+'</div>';
+      html+='</div>';
+    });
+    document.getElementById('mobSheetList').innerHTML=html;
+    sh.classList.add('open');
+  }
+}
+function closeMobSheet(){document.getElementById('mobSheet').classList.remove('open')}
+audio.addEventListener('timeupdate',function(){
+  if(audio.duration){
+    var pct=(audio.currentTime/audio.duration)*100;
+    var mb=document.getElementById('mobProg');
+    if(mb)mb.style.width=pct+'%';
+    var mc=document.getElementById('mpC');
+    if(mc){var m=Math.floor(audio.currentTime/60);var ss=Math.floor(audio.currentTime%60);mc.textContent=m+':'+(ss<10?'0':'')+ss}
+  }
+});
+(function(){
+  var mob=window.matchMedia('(max-width:900px)');
+  function chk(){document.getElementById('mobPlayer').style.display=mob.matches?'block':'none'}
+  mob.addEventListener('change',chk);chk();
+})();
+render();
 </script>
 </body>
 </html>
