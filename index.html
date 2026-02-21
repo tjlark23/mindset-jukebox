@@ -370,22 +370,56 @@ a{text-decoration:none;color:inherit}
 <footer class="site-footer" id="siteFooter"></footer>
 <audio id="audio" preload="none"></audio>
 <!-- MOBILE FLOATING PLAYER -->
-<div class="mob-sheet" id="mobSheet">
-  <div class="mob-sheet-bg" onclick="closeMobSheet()"></div>
-  <div class="mob-sheet-panel" id="mobSheetList"></div>
-</div>
-<div id="mobPlayer" style="display:block!important;position:fixed!important;bottom:16px!important;right:16px!important;z-index:99999!important;width:300px!important;max-width:calc(100vw - 32px)!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;transform:none!important">
-  <div style="background:#1a1f2e;border:2px solid #0d9488;border-radius:8px;padding:12px 14px;display:flex!important;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,0.4);position:relative;overflow:hidden">
+<div id="mobPlayer" style=""display:block!important;position:fixed!important;bottom:16px!important;right:16px!important;z-index:99999!important;width:300px!important;max-width:calc(100vw - 32px)!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;transform:none!important">
+  <!-- MINI BAR -->
+  <div id="mpMini" style="background:#1a1f2e;border:2px solid #0d9488;border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,0.4);position:relative;overflow:hidden">
     <div style="height:3px;background:#0f1520;position:absolute;bottom:0;left:0;right:0"><div id="mobProg" style="height:100%;background:#0d9488;width:0%;transition:width .3s linear"></div></div>
     <button onclick="togglePlay()" style="width:36px;height:36px;border-radius:50%;background:#0d9488;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg id="mpIco" viewBox="0 0 24 24" style="fill:white;width:14px;height:14px"><polygon points="8 4 20 12 8 20"/></svg></button>
-    <button onclick="prevTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#556;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
-    <button onclick="nextTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#556;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
+    <button onclick="prevTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#6b7890;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
+    <button onclick="nextTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#6b7890;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
     <div style="flex:1;min-width:0;overflow:hidden">
-      <div id="mpT" style="font-family:Playfair Display,serif;font-size:12px;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Select a Track</div>
-      <div id="mpA" style="font-family:JetBrains Mono,monospace;font-size:8px;color:#556;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px"></div>
+      <div id="mpT" style="font-family:Playfair Display,serif;font-size:12px;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">The Long Game</div>
+      <div id="mpA" style="font-family:JetBrains Mono,monospace;font-size:8px;color:#6b7890;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px">Naval Ravikant</div>
     </div>
-    <span id="mpC" style="font-family:JetBrains Mono,monospace;font-size:8px;color:#334;flex-shrink:0">0:00</span>
-    <button onclick="toggleMobSheet()" style="background:none;border:1px solid #2a3040;border-radius:4px;cursor:pointer;padding:5px 6px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="stroke:#556;width:14px;height:14px;fill:none;stroke-width:2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <span id="mpC" style="font-family:JetBrains Mono,monospace;font-size:8px;color:#4a5568;flex-shrink:0">0:00</span>
+    <button onclick="toggleMobExpand()" style="background:none;border:1px solid #2a3040;border-radius:4px;cursor:pointer;padding:5px 6px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="stroke:#6b7890;width:14px;height:14px;fill:none;stroke-width:2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  </div>
+  <!-- EXPANDED PANEL -->
+  <div id="mpExpanded" style="display:none;background:#1a1f2e;border:2px solid #0d9488;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.4);overflow:hidden;width:320px;max-width:calc(100vw - 32px)">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:6px;height:6px;border-radius:50%;background:#0d9488"></div>
+        <span style="font-family:JetBrains Mono,monospace;font-size:9px;font-weight:700;color:white;letter-spacing:2px;text-transform:uppercase">MJ Player</span>
+      </div>
+      <button onclick="toggleMobExpand()" style="background:none;border:1px solid rgba(255,255,255,0.15);width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px"><svg viewBox="0 0 24 24" style="stroke:#6b7890;width:12px;height:12px;fill:none;stroke-width:2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    </div>
+    <!-- Now Playing -->
+    <div style="padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.01)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="togglePlay()" style="width:40px;height:40px;border-radius:50%;background:#0d9488;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg id="mpIco2" viewBox="0 0 24 24" style="fill:white;width:16px;height:16px"><polygon points="8 4 20 12 8 20"/></svg></button>
+        <div style="flex:1;min-width:0">
+          <div id="mpT2" style="font-family:Playfair Display,serif;font-size:14px;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">The Long Game</div>
+          <div id="mpA2" style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:0.5px">Naval Ravikant</div>
+        </div>
+        <div style="display:flex;gap:4px;flex-shrink:0">
+          <button onclick="prevTrack()" style="width:28px;height:28px;border:1px solid rgba(255,255,255,0.1);background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px"><svg viewBox="0 0 24 24" style="stroke:rgba(255,255,255,0.3);width:12px;height:12px;fill:none;stroke-width:2"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
+          <button onclick="nextTrack()" style="width:28px;height:28px;border:1px solid rgba(255,255,255,0.1);background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px"><svg viewBox="0 0 24 24" style="stroke:rgba(255,255,255,0.3);width:12px;height:12px;fill:none;stroke-width:2"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+        <span id="mpC2" style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,0.2);width:32px">0:00</span>
+        <div style="flex:1;background:rgba(255,255,255,0.08);height:4px;border-radius:2px;overflow:hidden"><div id="mobProg2" style="height:100%;background:#0d9488;width:0%;transition:width .3s linear"></div></div>
+        <span id="mpD2" style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,0.2);width:32px;text-align:right">0:00</span>
+      </div>
+    </div>
+    <!-- Playlist -->
+    <div id="mpPL" style="max-height:300px;overflow-y:auto"></div>
+    <!-- Footer -->
+    <div style="padding:8px 14px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center">
+      <span id="mpCount" style="font-family:JetBrains Mono,monospace;font-size:8px;color:rgba(255,255,255,0.15);text-transform:uppercase;letter-spacing:1px">29 tracks</span>
+      <span style="font-family:JetBrains Mono,monospace;font-size:8px;color:rgba(13,148,136,0.4);letter-spacing:0.5px">mindsetjukebox.com</span>
+    </div>
   </div>
 </div>
 
@@ -729,16 +763,18 @@ function renderFooter(){
 
 function mobToggle(){if(window.innerWidth<=900){pc.classList.toggle('mob-open');document.getElementById('rpExp').textContent=pc.classList.contains('mob-open')?'Close':'Open'}}
 
-loadTrack(0);buildPlaylist();renderFooter();
+var navalIdx=S.findIndex(function(x){return x.s==='naval-ravikant'&&x.t==='The Long Game'});loadTrack(navalIdx>=0?navalIdx:0);buildPlaylist();renderFooter();
 // Sync mobile play icon
 audio.addEventListener('play',function(){
-  var ico=document.getElementById('mpIco');
-  if(ico)ico.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';
+  var pause='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';
+  var ico=document.getElementById('mpIco');if(ico)ico.innerHTML=pause;
+  var ico2=document.getElementById('mpIco2');if(ico2)ico2.innerHTML=pause;
   document.getElementById('pc').classList.add('playing');
 });
 audio.addEventListener('pause',function(){
-  var ico=document.getElementById('mpIco');
-  if(ico)ico.innerHTML='<polygon points="8 4 20 12 8 20"/>';
+  var play='<polygon points="8 4 20 12 8 20"/>';
+  var ico=document.getElementById('mpIco');if(ico)ico.innerHTML=play;
+  var ico2=document.getElementById('mpIco2');if(ico2)ico2.innerHTML=play;
   document.getElementById('pc').classList.remove('playing');
 });
 
@@ -748,31 +784,40 @@ function updateMobPlayer(){
   var s=S[ci];
   document.getElementById('mpT').textContent=s.t;
   document.getElementById('mpA').textContent=s.p||'';
+  var t2=document.getElementById('mpT2');if(t2)t2.textContent=s.t;
+  var a2=document.getElementById('mpA2');if(a2)a2.textContent=s.p||'';
+  var d2=document.getElementById('mpD2');if(d2)d2.textContent=s.d||'';
+  if(document.getElementById('mpExpanded').style.display!=='none')buildMobPlaylist();
 }
-function toggleMobSheet(){
-  var sh=document.getElementById('mobSheet');
-  if(sh.classList.contains('open')){closeMobSheet()}
-  else{
-    var html='<div class="mob-sheet-head"><span>'+S.length+' Tracks</span><button onclick="closeMobSheet()">&times;</button></div>';
-    S.forEach(function(s,i){
-      var act=i===ci?' style="background:rgba(13,148,136,0.12)"':'';
-      html+='<div onclick="playSong('+i+');closeMobSheet()"'+act+' style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">';
-      html+='<div style="font-family:Playfair Display,serif;font-size:13px;font-weight:700;color:'+(i===ci?'white':'var(--navy-song)')+'">'+s.t+'</div>';
-      html+='<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:'+(i===ci?'rgba(255,255,255,0.6)':'var(--navy-dim)')+';letter-spacing:0.5px;margin-top:2px">'+(s.p||'')+' \u00b7 '+s.d+'</div>';
-      html+='</div>';
-    });
-    document.getElementById('mobSheetList').innerHTML=html;
-    sh.classList.add('open');
-  }
+function toggleMobExpand(){
+  var mini=document.getElementById('mpMini');
+  var exp=document.getElementById('mpExpanded');
+  var isOpen=exp.style.display!=='none';
+  mini.style.display=isOpen?'flex':'none';
+  exp.style.display=isOpen?'none':'block';
+  if(!isOpen)buildMobPlaylist();
 }
-function closeMobSheet(){document.getElementById('mobSheet').classList.remove('open')}
+function buildMobPlaylist(){
+  var html='';
+  S.forEach(function(s,i){
+    var active=i===ci;
+    html+='<div onclick="playSong('+i+')" style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;border-left:2px solid '+(active?'#0d9488':'transparent')+';background:'+(active?'rgba(13,148,136,0.08)':'transparent')+'">';
+    html+='<div style="font-family:JetBrains Mono,monospace;font-size:9px;font-weight:700;color:'+(active?'#0d9488':'rgba(255,255,255,0.7)')+';text-transform:uppercase;letter-spacing:0.5px">'+s.t+'</div>';
+    html+='<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-top:2px">'+(s.p||'')+' \u00b7 '+s.d+'</div>';
+    html+='</div>';
+  });
+  document.getElementById('mpPL').innerHTML=html;
+  document.getElementById('mpCount').textContent=S.length+' tracks';
+}
 audio.addEventListener('timeupdate',function(){
   if(audio.duration){
     var pct=(audio.currentTime/audio.duration)*100;
-    var mb=document.getElementById('mobProg');
-    if(mb)mb.style.width=pct+'%';
-    var mc=document.getElementById('mpC');
-    if(mc){var m=Math.floor(audio.currentTime/60);var ss=Math.floor(audio.currentTime%60);mc.textContent=m+':'+(ss<10?'0':'')+ss}
+    var mb=document.getElementById('mobProg');if(mb)mb.style.width=pct+'%';
+    var mb2=document.getElementById('mobProg2');if(mb2)mb2.style.width=pct+'%';
+    var m=Math.floor(audio.currentTime/60);var ss=Math.floor(audio.currentTime%60);
+    var t=m+':'+(ss<10?'0':'')+ss;
+    var mc=document.getElementById('mpC');if(mc)mc.textContent=t;
+    var mc2=document.getElementById('mpC2');if(mc2)mc2.textContent=t;
   }
 });
 // Mobile player visibility
