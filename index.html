@@ -253,7 +253,7 @@ a{text-decoration:none;color:inherit}
 .prof-bio{animation-delay:0.24s!important}
 .prof-handle{animation-delay:0.3s!important}
 
-@media(min-width:901px){.mob-player{display:none!important}.mob-sheet{display:none!important}}
+@media(min-width:901px){.mob-sheet{display:none!important}}
 @media(max-width:900px){
   /* LAYOUT: single column, player at bottom */
   .layout{grid-template-columns:1fr}
@@ -374,18 +374,18 @@ a{text-decoration:none;color:inherit}
   <div class="mob-sheet-bg" onclick="closeMobSheet()"></div>
   <div class="mob-sheet-panel" id="mobSheetList"></div>
 </div>
-<div class="mob-player" id="mobPlayer">
-  <div class="mob-bar">
-    <div class="mob-prog"><div class="mob-prog-bar" id="mobProg"></div></div>
-    <button class="mp-play" onclick="togglePlay()"><svg id="mpIco" viewBox="0 0 24 24"><polygon points="8 4 20 12 8 20"/></svg></button>
-    <button class="mp-skip" onclick="prevTrack()"><svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
-    <button class="mp-skip" onclick="nextTrack()"><svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
-    <div class="mp-info">
-      <div class="mp-title" id="mpT">Select a Track</div>
-      <div class="mp-artist" id="mpA"></div>
+<div id="mobPlayer" style="display:block!important;position:fixed!important;bottom:16px!important;right:16px!important;z-index:99999!important;width:300px!important;max-width:calc(100vw - 32px)!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;transform:none!important">
+  <div style="background:#1a1f2e;border:2px solid #0d9488;border-radius:8px;padding:12px 14px;display:flex!important;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,0.4);position:relative;overflow:hidden">
+    <div style="height:3px;background:#0f1520;position:absolute;bottom:0;left:0;right:0"><div id="mobProg" style="height:100%;background:#0d9488;width:0%;transition:width .3s linear"></div></div>
+    <button onclick="togglePlay()" style="width:36px;height:36px;border-radius:50%;background:#0d9488;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg id="mpIco" viewBox="0 0 24 24" style="fill:white;width:14px;height:14px"><polygon points="8 4 20 12 8 20"/></svg></button>
+    <button onclick="prevTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#556;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
+    <button onclick="nextTrack()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0"><svg viewBox="0 0 24 24" style="stroke:#556;width:12px;height:12px;fill:none;stroke-width:2"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
+    <div style="flex:1;min-width:0;overflow:hidden">
+      <div id="mpT" style="font-family:Playfair Display,serif;font-size:12px;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Select a Track</div>
+      <div id="mpA" style="font-family:JetBrains Mono,monospace;font-size:8px;color:#556;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px"></div>
     </div>
-    <span class="mp-time" id="mpC">0:00</span>
-    <button class="mp-list-btn" onclick="toggleMobSheet()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <span id="mpC" style="font-family:JetBrains Mono,monospace;font-size:8px;color:#334;flex-shrink:0">0:00</span>
+    <button onclick="toggleMobSheet()" style="background:none;border:1px solid #2a3040;border-radius:4px;cursor:pointer;padding:5px 6px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="stroke:#556;width:14px;height:14px;fill:none;stroke-width:2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   </div>
 </div>
 
@@ -775,7 +775,12 @@ audio.addEventListener('timeupdate',function(){
     if(mc){var m=Math.floor(audio.currentTime/60);var ss=Math.floor(audio.currentTime%60);mc.textContent=m+':'+(ss<10?'0':'')+ss}
   }
 });
-// Mobile player visibility handled by CSS media queries
+// Mobile player visibility
+(function(){
+  var mp=document.getElementById('mobPlayer');
+  function chk(){mp.style.display=window.innerWidth>900?'none':'block'}
+  window.addEventListener('resize',chk);chk();
+})();
 render();
 </script>
 </body>
