@@ -1,5 +1,7 @@
 {
   "name": "mindset-jukebox",
   "compatibility_date": "2026-02-18",
-  "pages_build_output_dir": "./"
+  "assets": {
+    "directory": "./public"
+  }
 }
