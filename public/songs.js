@@ -29,6 +29,7 @@ const SONGS = [
   {id:"21-million",title:"21 Million",person:"Satoshi Nakamoto",slug:"satoshi-nakamoto",genre:"Folk Pop",topics:["Contrarian","Freedom"],dur:"4:39",secs:279,file:"TJs Playlist/21 Million (Satoshi).mp3",tagline:"Sound money for a broken system.",desc:"A fixed supply. No central authority. No printing press. Satoshi built the exit from a system that was never designed to protect you."},
   {id:"wake-up",title:"Wake Up",person:"Anthony DeMello",slug:"anthony-demello",genre:"Folk Pop",topics:["Books","Mindset"],dur:"3:37",secs:217,file:"Showcase/Wake Up v2.mp3",tagline:"You're asleep and you don't know it.",desc:"Most people sleepwalk through life attached to things that don't matter. DeMello's message: awareness is the first step to freedom."},
   {id:"this-is-water",title:"This is Water",person:"David Foster Wallace",slug:"david-foster-wallace",genre:"Pop Punk",topics:["Books","Mindset"],dur:"4:10",secs:250,file:"Showcase/This is Water.mp3",tagline:"The obvious truths are the easiest to forget.",desc:"The most important realities are the hardest to see. Wallace's commencement speech became a manifesto for conscious living."}
+  {id:"flywheels",title:"Flywheels",person:"Nathan Barry",slug:"nathan-barry",genre:"Country Trap",topics:["Entrepreneurship","Mindset"],dur:"4:11",secs:251,file:"Showcase/Flywheels (Nathan Barry).mp3",tagline:"Build a flywheel, not a hamster wheel.",desc:"Nathan Barry built Kit (formerly ConvertKit) by stacking small creator wins into compounding momentum. The flywheel concept: every output becomes the next input. Create, grow, earn, reinvest. The hardest part is getting it spinning — after that, momentum does the work."},
 ];
 const PEOPLE = [
   {slug:"oliver-burkeman",name:"Oliver Burkeman",role:"Author, Four Thousand Weeks",photo:"https://unavatar.io/x/oliverburkeman",twitter:"oliverburkeman"},
@@ -55,6 +56,7 @@ const PEOPLE = [
   {slug:"satoshi-nakamoto",name:"Satoshi Nakamoto",role:"Bitcoin creator",photo:"",twitter:null},
   {slug:"david-foster-wallace",name:"David Foster Wallace",role:"Author, This is Water",photo:"https://unavatar.io/David+Foster+Wallace",twitter:null},
   {slug:"anthony-demello",name:"Anthony DeMello",role:"Author, Awareness",photo:"https://unavatar.io/Anthony+de+Mello",twitter:null}
+  {id:"flywheels",title:"Flywheels",person:"Nathan Barry",slug:"nathan-barry",genre:"Country Trap",topics:["Entrepreneurship","Mindset"],dur:"4:11",secs:251,file:"Showcase/Flywheels (Nathan Barry).mp3",tagline:"Build a flywheel, not a hamster wheel.",desc:"Nathan Barry built Kit (formerly ConvertKit) by stacking small creator wins into compounding momentum. The flywheel concept: every output becomes the next input. Create, grow, earn, reinvest. The hardest part is getting it spinning — after that, momentum does the work."},
 ];
 const GENRES=[...new Set(SONGS.map(s=>s.genre))];
 const TOPICS=[...new Set(SONGS.flatMap(s=>s.topics))].sort();
