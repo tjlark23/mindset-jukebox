@@ -3,27 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mindset Jukebox | Songs That Teach Big Ideas</title>
-<meta name="description" content="Radio-quality songs that teach you the best ideas from the world's top entrepreneurs, authors, and thinkers. Music-based personal development.">
+<title>Mindset Jukebox | Songs About the Best Ideas in Business, Mindset, and Grit</title>
+<meta name="description" content="Radio-quality AI songs that teach the best ideas from the world's top entrepreneurs, authors, and thinkers. Mindset, books, business, and grit -- set to music.">
+<meta name="author" content="TJ Larkin">
 <link rel="canonical" href="https://mindsetjukebox.com/">
-<meta property="og:title" content="Mindset Jukebox | Songs That Teach Big Ideas">
-<meta property="og:description" content="Radio-quality songs that teach you the best ideas from the world's top entrepreneurs, authors, and thinkers.">
-<meta property="og:url" content="https://mindsetjukebox.com/">
+
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Mindset Jukebox">
+<meta property="og:title" content="Mindset Jukebox | Songs About the Best Ideas in Business, Mindset, and Grit">
+<meta property="og:description" content="Radio-quality AI songs that teach the best ideas from the world's top entrepreneurs, authors, and thinkers.">
+<meta property="og:url" content="https://mindsetjukebox.com/">
 <meta property="og:locale" content="en_US">
+
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Mindset Jukebox | Songs That Teach Big Ideas">
-<meta name="twitter:description" content="Radio-quality songs that teach you the best ideas from the world's top entrepreneurs, authors, and thinkers.">
+<meta name="twitter:title" content="Mindset Jukebox | Songs About the Best Ideas">
+<meta name="twitter:description" content="Radio-quality AI songs that teach the best ideas from top entrepreneurs, authors, and thinkers.">
+<meta name="twitter:creator" content="@TJLarkin23">
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "MusicGroup",
+  "@type": "WebSite",
   "name": "Mindset Jukebox",
   "url": "https://mindsetjukebox.com/",
-  "description": "Radio-quality songs that teach you the best ideas from the world's top entrepreneurs, authors, and thinkers. Music-based personal development.",
-  "genre": ["Personal Development", "Educational Music"]
+  "description": "Radio-quality AI songs that teach the best ideas from the world's top entrepreneurs, authors, and thinkers.",
+  "inLanguage": "en-US",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mindset Jukebox",
+    "url": "https://mindsetjukebox.com/",
+    "founder": {
+      "@type": "Person",
+      "name": "TJ Larkin",
+      "url": "https://tjlarkin.com",
+      "sameAs": [
+        "https://tjlarkin.com",
+        "https://www.linkedin.com/in/tjlarkin1/",
+        "https://x.com/TJLarkin23"
+      ]
+    }
+  }
 }
 </script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -359,7 +381,6 @@ a{text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
-<h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0">Mindset Jukebox: Songs That Teach Big Ideas from Top Entrepreneurs and Thinkers</h1>
 <div class="layout">
   <div class="content-wrap">
     <nav class="nav">
@@ -645,16 +666,14 @@ var playTri='<svg width="12" height="12" viewBox="0 0 24 24"><polygon points="7 
 var audio=document.getElementById('audio');
 var ci=0,playing=false;
 var pc=document.getElementById('pc');
-function loadTrack(i){ci=i;var s=S[i];audio.src=AB+encodeURI(s.f);audio.load();document.getElementById('rpT').textContent=s.t;document.getElementById('rpA').textContent=s.p||'Mindset Jukebox';document.getElementById('rpG').textContent=s.g;document.getElementById('rpD').textContent=s.d;document.getElementById('rpC').textContent='0:00';document.getElementById('rpB').style.width='0%';updateActive();updateMobPlayer()}
-function playSong(i){loadTrack(i);audio.play().catch(function(){setTimeout(function(){audio.play().catch(function(){})},150)});playing=true;pc.classList.add('playing');document.getElementById('rpIp').style.display='none';document.getElementById('rpIpa').style.display='block';updateActive()}
+function loadTrack(i){ci=i;var s=S[i];audio.src=AB+encodeURI(s.f);document.getElementById('rpT').textContent=s.t;document.getElementById('rpA').textContent=s.p||'Mindset Jukebox';document.getElementById('rpG').textContent=s.g;document.getElementById('rpD').textContent=s.d;document.getElementById('rpC').textContent='0:00';document.getElementById('rpB').style.width='0%';updateActive();updateMobPlayer()}
+function playSong(i){loadTrack(i);audio.play().catch(function(){});playing=true;pc.classList.add('playing');document.getElementById('rpIp').style.display='none';document.getElementById('rpIpa').style.display='block';updateActive()}
 function togglePlay(){if(!playing){audio.play().catch(function(){});playing=true;pc.classList.add('playing');document.getElementById('rpIp').style.display='none';document.getElementById('rpIpa').style.display='block';updateActive()}else{audio.pause();playing=false;pc.classList.remove('playing');document.getElementById('rpIp').style.display='block';document.getElementById('rpIpa').style.display='none';updateActive()}}
 function nextTrack(){playSong((ci+1)%S.length)}
 function prevTrack(){playSong(ci>0?ci-1:S.length-1)}
 function seek(e){var r=document.getElementById('rpProg').getBoundingClientRect();var pct=(e.clientX-r.left)/r.width;audio.currentTime=pct*audio.duration}
 audio.addEventListener('timeupdate',function(){if(!audio.duration)return;var pct=(audio.currentTime/audio.duration)*100;document.getElementById('rpB').style.width=pct+'%';document.getElementById('rpC').textContent=fmt(audio.currentTime)});
 audio.addEventListener('ended',function(){nextTrack()});
-// Safety: detect end of track if ended event doesn't fire
-audio.addEventListener('timeupdate',function(){if(audio.duration&&audio.currentTime>=audio.duration-0.3&&!audio.paused){if(!audio._endSafety){audio._endSafety=setTimeout(function(){if(audio.ended||(audio.duration&&audio.currentTime>=audio.duration-0.5)){nextTrack()}audio._endSafety=null},1500)}}});
 
 function updateActive(){
   document.querySelectorAll('.srow,.tc,.rp-item').forEach(function(el){el.classList.remove('active')});
