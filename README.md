@@ -1,4 +1,5 @@
 # Mindset Jukebox
+Live: https://mindsetjukebox.com
 
 Radio-quality songs that teach you how the world's smartest people think. Built by [TJ Larkin](https://tjlarkin.com).
 
